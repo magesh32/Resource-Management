@@ -1,0 +1,72 @@
+﻿body
+{
+    background-color:#FFDAB9;   
+}
+#cont
+{
+    width: 650px;
+    margin: 70px 0 0 426px;
+    width:540px;
+    background-color: #FFEFD5;
+    height: 407px;
+    border:2px solid black;
+    border: 2px solid black;
+   
+}
+h2
+{
+    margin-left: 120px;
+    color: #3B9696;
+    font-weight: bold;
+    font-size: 28px;
+}
+span {
+    margin: 32px 1px 0px 120px;
+    float: left;
+    color: #4A8E8B;
+}
+input {
+    float: right;
+    height: 20px;
+    margin: 31px 48px 0px 61px;
+    color: #4A8E8B;
+}
+.hyper
+{
+   
+  
+    
+    width: 139px;
+    margin: 80px 0 0 63px;
+    position: absolute;
+}
+.hyper1
+{
+ 
+   
+    font-size: 18px;
+    position: absolute;
+    margin: 109px 0 0 241px;
+    top: 395px;
+    left: 430px;
+    width: 108px;
+}
+.lbl
+{
+ position: absolute;
+    margin: 108px 0 0 120px;
+   
+    font-size: 18px;
+    color: black;
+    top: 397px;
+    left: 428px;
+    width: 122px;
+}
+.btn
+{
+   
+   width:80px;
+    height:25px;
+   margin-left: 63px;
+    position: absolute;
+}

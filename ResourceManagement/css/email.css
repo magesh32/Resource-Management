@@ -1,0 +1,14 @@
+﻿#email
+{
+   
+    margin-top:60px;
+}
+span
+{
+    margin-left: 60px;
+}
+[type=text]
+{
+    margin-left: 50px;
+    width: 200px;
+}
