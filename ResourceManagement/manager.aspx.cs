@@ -60,10 +60,15 @@ public partial class manager : System.Web.UI.Page
     {
         MultiView1.ActiveViewIndex = 3;
     }
+    protected void LinkButton6_Click(object sender, EventArgs e)
+    {
+        MultiView1.ActiveViewIndex = 4;
+    }
 
     //THIS IS TO SHOW THE CORRESPONDING DEVELOPER IN THE SELECTED TECHNOLOGY UNDER A PARTICULAR MANAGER
     protected void tech1_SelectedIndexChanged(object sender, EventArgs e)
     {
+        int b = Convert.ToInt32(Session["Emp_Id"]);
         string jun = "Junior_Developer";
         //THIS IS TO CHECK AND FILL NAMES OF THE JUNIOR DEVELOPER DROPDOWNLIST
         SqlConnection sqlConn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
@@ -451,7 +456,70 @@ public partial class manager : System.Web.UI.Page
     {
         Response.Redirect("~/login.aspx");
     }
-}
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+
+        conn.Open();
+        SqlCommand com = new SqlCommand("select emp_name from Employee where role<>'manager' AND role<>'admin' AND flag<>1", conn);
+        SqlDataReader sdr = com.ExecuteReader();
+        ListBox4.Items.Clear();
+        while (sdr.Read())
+        {
+            ListItem name = new ListItem();
+            name.Text = sdr["emp_name"].ToString();
+            name.Value = sdr["emp_name"].ToString();
+            //ListItem rol = new ListItem();
+            //rol.Text = sdr["role"].ToString();
+            //rol.Value = sdr["role"].ToString();
+            ListBox4.Items.Add(name);
+            ListBox4.Rows = ListBox4.Items.Count;
+
+        }
+        com.Dispose();
+
+        conn.Close();
+    }
+
+
+    protected void ListBox4_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+    SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+        conn.Open();
+
+        
+            string eid = (string)(Session["Emp_Id"]);
+           
+
+            if (ListBox4.SelectedIndex > -1)
+            {
+
+                List<int> select = ListBox4.GetSelectedIndices().ToList();
+                for (int i = 0; i < select.Count; i++)
+                {
+                    int a = 1;
+                    string l = ListBox4.Items[select[i]].ToString();
+                    SqlCommand command = new SqlCommand("update employee set manager=@eid,flag=@flag where emp_name=@len", conn);
+                    command.Parameters.AddWithValue("@flag", a);
+                    command.Parameters.AddWithValue("@len", l);
+                    command.Parameters.AddWithValue("@eid", eid);
+                    command.ExecuteNonQuery();
+                    command.Dispose();
+
+                }
+            }
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Resources has been added under you');", true);
+            conn.Close();
+
+        }
+
+    }
+    
+
 
 //Employee Class - Used to store employee Info
 public class Employee

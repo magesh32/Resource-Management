@@ -13,6 +13,7 @@
         <li><asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">Resources</asp:LinkButton></li>
         <li><asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click">Add new project</asp:LinkButton></li>
         <li><asp:LinkButton ID="LinkButton4" runat="server" OnClick="LinkButton4_Click">Dashboard</asp:LinkButton></li>
+         <li><asp:LinkButton ID="LinkButton6" runat="server" OnClick="LinkButton6_Click">Add new resouce</asp:LinkButton></li>
     </ul>
     </div>
     <%--MULTIVIEW STARTS--%>
@@ -262,6 +263,12 @@ CommandArgument='<%#Bind("P_id") %>'></asp:Button>
             </asp:View>
             <asp:View ID="View4" runat="server">
                 <asp:Label ID="Label3" runat="server" Text="Tamil"></asp:Label>
+            </asp:View>
+             <asp:View ID="View5" runat="server">
+    <asp:Button ID="Button1" runat="server" Text="Select Employees" OnClick="Button1_Click" />
+   
+    <asp:ListBox ID="ListBox4" runat="server" OnSelectedIndexChanged="ListBox1_SelectedIndexChanged" SelectionMode="Multiple" Height="98px" Width="169px"></asp:ListBox>
+     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Add Employess" Width="141px" />
             </asp:View>
             <%--VIEW3 ENDS HERE--%>
 

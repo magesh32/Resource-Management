@@ -25,15 +25,19 @@ public partial class login : System.Web.UI.Page
         if (sdr.Read())
         {
             //PAGE REDIRECTION IF LOGGING IN PERSON IS MANAGER 
-            if (sdr[0].ToString() == "Manager")
+            if (sdr[0].ToString() == "manager")
             {
                 Response.Redirect("manager.aspx");
 
             }
-            else
+            else if (sdr[0].ToString() == "admin")
             {
                 //PAGE REDIRECTION IF LOGGING IN PERSON IS A DEVELOPER
-                Response.Write("developer.aspx");
+                Response.Redirect("admin.aspx");
+            }
+            else
+            {
+                Response.Redirect("developer.aspx");
             }
 
         }
