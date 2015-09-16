@@ -54,12 +54,24 @@
                 <tr>
                     <td>
                         <br />
+                        <asp:Label ID="typeoftech" runat="server" Text=" Type of Technology"></asp:Label></td>
+                    <td>
+                        <asp:DropDownList ID="typeoftech1" runat="server" OnSelectedIndexChanged="typeoftech1_SelectedIndexChanged" AutoPostBack="true">
+                            <asp:ListItem>select </asp:ListItem>
+                            <asp:ListItem Value="Properitory">Properitory</asp:ListItem>
+                            <asp:ListItem Value="Open Source">Open Source</asp:ListItem>
+                        </asp:DropDownList></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br />
                         <asp:Label ID="Label7" runat="server" Text="Technology"></asp:Label></td>
                     <td>
                         <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
                             <asp:ListItem>select </asp:ListItem>
                             <asp:ListItem Value=".Net">.Net</asp:ListItem>
                             <asp:ListItem Value="Php">Php</asp:ListItem>
+                            <asp:ListItem Value="Angular JS">Angular JS</asp:ListItem>
                         </asp:DropDownList></td>
                 </tr>
                 <tr>
@@ -71,8 +83,12 @@
                             <asp:ListItem>select </asp:ListItem>
                             <asp:ListItem Value="Ektron">Ektron</asp:ListItem>
                             <asp:ListItem Value="Episerver">Episerver</asp:ListItem>
+                            <asp:ListItem Value="Kentigo">Kentigo</asp:ListItem>
+                            <asp:ListItem Value="Sitecore">Sitecore</asp:ListItem>
+                            <asp:ListItem Value="Sharepoint">Sharepoint</asp:ListItem>
                             <asp:ListItem Value="Majento">Majento</asp:ListItem>
                             <asp:ListItem Value="Drupal">Drupal</asp:ListItem>
+                            <asp:ListItem Value="Jumla">Jumla</asp:ListItem>
                         </asp:DropDownList></td>
                     <td>
                         <asp:Label ID="techvalidation" runat="server" CssClass="errors"></asp:Label></td>

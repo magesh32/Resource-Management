@@ -37,21 +37,49 @@ public partial class singup : System.Web.UI.Page
         Response.Redirect("login.aspx");
     }
     //ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "anything", "alert('Hello ' + TextBox1.Text);", true);
+    protected void typeoftech1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (typeoftech1.SelectedValue == "Properitory")
+        {
+            DropDownList3.Items.FindByValue(".Net").Enabled = true;
+            DropDownList3.Items.FindByValue("Php").Enabled = false;
+            DropDownList3.Items.FindByValue("Angular JS").Enabled = false;
+        }
+        else if (typeoftech1.SelectedValue == "Open Source")
+        {
+            DropDownList3.Items.FindByValue(".Net").Enabled = false;
+            DropDownList3.Items.FindByValue("Php").Enabled = true;
+            DropDownList3.Items.FindByValue("Angular JS").Enabled = true;
+        }
+    }
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (DropDownList3.SelectedValue==".Net")
         {
             DropDownList1.Items.FindByValue("Ektron").Enabled = true;
             DropDownList1.Items.FindByValue("Episerver").Enabled = true;
+            DropDownList1.Items.FindByValue("Kentigo").Enabled = true;
+            DropDownList1.Items.FindByValue("Sitecore").Enabled = true;
+            DropDownList1.Items.FindByValue("Sharepoint").Enabled = true;
             DropDownList1.Items.FindByValue("Majento").Enabled = false;
             DropDownList1.Items.FindByValue("Drupal").Enabled = false;
+            DropDownList1.Items.FindByValue("Jumla").Enabled = false;
         }
         else if (DropDownList3.SelectedValue == "Php")
         {
             DropDownList1.Items.FindByValue("Ektron").Enabled = false;
             DropDownList1.Items.FindByValue("Episerver").Enabled = false;
+            DropDownList1.Items.FindByValue("Kentigo").Enabled = false;
+            DropDownList1.Items.FindByValue("Sitecore").Enabled = false;
+            DropDownList1.Items.FindByValue("Sharepoint").Enabled = false;
             DropDownList1.Items.FindByValue("Majento").Enabled = true;
             DropDownList1.Items.FindByValue("Drupal").Enabled = true;
+            DropDownList1.Items.FindByValue("Jumla").Enabled = true;
         }
+    }
+
+    protected void typeoftech1_SelectedIndexChanged1(object sender, EventArgs e)
+    {
+
     }
 }

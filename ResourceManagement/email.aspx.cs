@@ -8,13 +8,13 @@ using System.Net.Mail;
 
 public partial class email : System.Web.UI.Page
 {
-    protected void Page_Load(object sender, EventArgs e)
+      protected void Page_Load(object sender, EventArgs e)
     {
-
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
         string id = TextBox1.Text;
+        Session["emailid"] = TextBox1.Text;
         Sendemail(id);
         Response.Redirect("login.aspx");
     }
@@ -27,7 +27,7 @@ public partial class email : System.Web.UI.Page
             message.From = new MailAddress("ananth.ameex@gmail.com", "ANANTH");
             message.To.Add(id);
             message.Subject = "Verification Email";
-            ActivationUrl = Server.HtmlEncode("http://localhost:52594/newpass.aspx");
+            ActivationUrl = Server.HtmlEncode("http://dev.resourcemanagement/newpass.aspx");
             message.Body = "<a href='" + ActivationUrl + "'>Click Here to verify your acount</a>";
             message.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient();
@@ -39,7 +39,10 @@ public partial class email : System.Web.UI.Page
         }
         catch (Exception ex)
         {
-
+            Console.WriteLine(ex);
         }
+
     }
+
+    public int emailid { get; set; }
 }

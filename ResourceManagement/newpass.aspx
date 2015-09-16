@@ -48,12 +48,5 @@
    
     <asp:Button ID="Button1" Text="save" runat="server" OnClick="Button1_Click"/>
     <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
-        <Columns>
-            <asp:BoundField DataField="password" HeaderText="password" SortExpression="password" />
-            <asp:BoundField DataField="email_id" HeaderText="email_id" SortExpression="email_id" />
-        </Columns>
-    </asp:GridView>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:projectConnectionString %>" SelectCommand="SELECT [password], [email_id] FROM [Employee]"></asp:SqlDataSource>
 </asp:Content>
 

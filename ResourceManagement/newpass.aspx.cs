@@ -9,24 +9,40 @@ using System.Web.UI.WebControls;
 
 public partial class newpass : System.Web.UI.Page
 {
+    string email = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        email = (string)(Session["emailid"]);
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
+      
 
-        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
-        conn.Open();
-        SqlCommand UpdateCommand = new SqlCommand("UPDATE Employee SET password=@pass where email_id='" + TextBox3.Text + "' ", conn);
+        if (TextBox3.Text.ToString() == email)
+        {
+            SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+            conn.Open();
+            SqlCommand UpdateCommand = new SqlCommand("UPDATE Employee SET password=@pass where email_id='" + TextBox3.Text + "' ", conn);
+            UpdateCommand.Parameters.Add("@pass", System.Data.SqlDbType.VarChar).Value = TextBox1.Text;
+            UpdateCommand.ExecuteNonQuery();
+            conn.Close();
+            Response.Redirect("login.aspx");
+        }
+        else
+        {
+            Messagebox("Invalid Email_ID!");
+        }
 
-        UpdateCommand.Parameters.Add("@pass",System.Data.SqlDbType.VarChar).Value = TextBox1.Text;
-
-        
-        UpdateCommand.ExecuteNonQuery();
-        conn.Close();
-        GridView1.DataBind();
-        Response.Redirect("login.aspx");
     }
-   
+    private void Messagebox(string Message)
+    {
+        Label lblMessageBox = new Label();
+
+        lblMessageBox.Text =
+            "<script language='javascript'>" + Environment.NewLine +
+            "window.alert('" + Message + "')</script>";
+
+        Page.Controls.Add(lblMessageBox);
+
+    }
 }

@@ -35,3 +35,24 @@
     background-color: #FFEFD5;
     border: 1px solid rgb(156, 118, 118);
 }
+.logo
+{
+   font-style: oblique;
+    font-size: 26px;
+    color: #B32A8F;
+}
+.desi
+{
+    margin: 10px 0 0 35px;
+}
+.link
+{
+    float:right;
+    width:80px;
+    font-size:18px;
+    
+}
+.seproid
+{
+    width: 100px;
+}

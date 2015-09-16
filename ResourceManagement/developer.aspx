@@ -6,11 +6,19 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
      <div  id="menu">
      <ul>
-        <li><asp:LinkButton ID="LinkButton1" runat="server" >Projects</asp:LinkButton></li>
-        <li><asp:LinkButton ID="LinkButton2" runat="server" >Resources</asp:LinkButton></li>
+        <li><asp:LinkButton ID="LinkButton1" runat="server"  OnClick="LinkButton1_Click" >Projects</asp:LinkButton></li>
+        <li><asp:LinkButton ID="LinkButton2" runat="server"  OnClick="LinkButton2_Click">Resources</asp:LinkButton></li>
     </ul>
     </div>
-    <asp:Label ID="lblin" runat="server" Text="Label"></asp:Label>
+           
+        <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
+        <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
+        <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>        
+        <asp:MultiView ID="MultiView1" runat="server">
+
+            <%--VIEW1 FOR SHOWING PROJECTS UNDER MANAGER--%>
+            <asp:View ID="View1" runat="server">    
+    
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"  DataSourceID="SqlDataSource1" >
         <Columns>
             <asp:BoundField DataField="P_id" HeaderText="project_id" ReadOnly="True" SortExpression="P_id" />
@@ -25,9 +33,9 @@
         </Columns>
                    
                     </asp:GridView>
-    
-   
-    
+    </asp:View>
+
+            <asp:View ID="View2" runat="server">
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:projectConnectionString %>" SelectCommand="select * from projectlist projtbl where projtbl.P_id in
 (select rsc.P_id from Employee emp 
 join pro_resources rsc on emp.emp_id=rsc.emp_id and rsc.emp_id=@session)">
@@ -35,16 +43,19 @@ join pro_resources rsc on emp.emp_id=rsc.emp_id and rsc.emp_id=@session)">
      <asp:SessionParameter Name="session" SessionField="Emp_id" ConvertEmptyStringToNull="true" />
   </SelectParameters>
     </asp:SqlDataSource>
+  
     <table>
         <tr>
             <td>
   
-    <asp:Label ID="Label1" runat="server" Text="enter project details"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="enter your project Id"></asp:Label>
                 </td>
            <td>
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+               <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" style="height: 20px"></asp:DropDownList>
            </td>
-            <td>
+            </tr>
+        <tr><td></td>
+           <td>
                 
                 <asp:Button ID="Button1" runat="server" Text="show" OnClick="Button1_Click" />
             </td>
@@ -53,5 +64,8 @@ join pro_resources rsc on emp.emp_id=rsc.emp_id and rsc.emp_id=@session)">
      </table>
     <asp:GridView ID="GridView3" runat="server">
                 </asp:GridView>
+                </asp:View>
+            </asp:MultiView>
+  
 </asp:Content>
 

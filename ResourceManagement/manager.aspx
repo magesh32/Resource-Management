@@ -14,31 +14,26 @@
         <li><asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click">Add new project</asp:LinkButton></li>
         <li><asp:LinkButton ID="LinkButton4" runat="server" OnClick="LinkButton4_Click">Dashboard</asp:LinkButton></li>
          <li><asp:LinkButton ID="LinkButton6" runat="server" OnClick="LinkButton6_Click">Add new resouce</asp:LinkButton></li>
+      
     </ul>
     </div>
+    <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
+    <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
+    <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>
     <%--MULTIVIEW STARTS--%>
         <asp:MultiView ID="MultiView1" runat="server">
 
             <%--VIEW1 FOR SHOWING PROJECTS UNDER MANAGER--%>
             <asp:View ID="View1" runat="server">
-               <asp:GridView ID="GridView3" DataKeyNames="P_id" AutoGenerateColumns="false" runat="server" CellPadding="6" OnRowCancelingEdit="GridView3_RowCancelingEdit"  
-  
-OnRowEditing="GridView3_RowEditing" OnRowUpdating="GridView3_RowUpdating" OnRowDeleting="GridView3_RowDeleting" OnRowDataBound="GridView3_RowDataBound" OnRowCommand="GridView3_RowCommand">  
+               <asp:GridView ID="GridView3" DataKeyNames="P_id" AutoGenerateColumns="false" runat="server" CellPadding="6"  OnRowCommand="GridView3_RowCommand">  
             <Columns> 
                 <asp:TemplateField HeaderText="Action">  
                     <ItemTemplate> 
                         <%--SELECT BUTTON--%>
                         <asp:Button ID="lbltest" runat="server" Text="Select" CommandName="Action"
 CommandArgument='<%#Bind("P_id") %>'></asp:Button> 
-                        <%--EDIT AND DELETE BUTTON IN ITEMTEMPLATE--%>
-                        <asp:Button ID="btn_Edit" runat="server" Text="Edit" CommandName="Edit" /> 
-                        <asp:Button ID="btn_Delete" runat="server" Text="Delete" CommandName="Delete" />  
                     </ItemTemplate>  
-                    <%--EDITITEM TEMPLATE TO SHOW UPDATE AND CANCEL AFTER CLICKING EDIT BUTTON--%>
-                    <EditItemTemplate>  
-                        <asp:Button ID="btn_Update" runat="server" Text="Update" CommandName="Update"/>  
-                        <asp:Button ID="btn_Cancel" runat="server" Text="Cancel" CommandName="Cancel"/>  
-                    </EditItemTemplate>  
+                    
                 </asp:TemplateField>  
                 <%--PROJECT_ID--%>
                 <asp:TemplateField HeaderText="Project_Id">  
@@ -51,27 +46,21 @@ CommandArgument='<%#Bind("P_id") %>'></asp:Button>
                     <ItemTemplate>  
                         <asp:Label ID="lbl_Name" runat="server" Text='<%#Eval("P_name") %>'></asp:Label>  
                     </ItemTemplate>   
-                    <EditItemTemplate>  
-                        <asp:TextBox ID="txt_Name" runat="server" Text='<%#Eval("P_name") %>'></asp:TextBox>  
-                    </EditItemTemplate>  
+                   
                 </asp:TemplateField>  
                 <%--CLIENT COLUMN--%>
                 <asp:TemplateField HeaderText="Client">  
                     <ItemTemplate>  
                         <asp:Label ID="lbl_Client" runat="server" Text='<%#Eval("Client") %>'></asp:Label>  
                     </ItemTemplate>  
-                    <EditItemTemplate>  
-                        <asp:TextBox ID="txt_Client" runat="server" Text='<%#Eval("Client") %>'></asp:TextBox>  
-                    </EditItemTemplate> 
+                   
                 </asp:TemplateField>  
                 <%--DURAION COLUMN--%>
                 <asp:TemplateField HeaderText="Duration">  
                     <ItemTemplate>  
                         <asp:Label ID="lbl_Duration" runat="server" Text='<%#Eval("Duration") %>'></asp:Label>  
                     </ItemTemplate> 
-                    <EditItemTemplate>  
-                        <asp:TextBox ID="txt_Duration" runat="server" Text='<%#Eval("Duration") %>'></asp:TextBox>  
-                    </EditItemTemplate>
+                   
                     </asp:TemplateField> 
                 <%--STATUS OF PROJECT--%>
                  <asp:TemplateField HeaderText="Status">  
@@ -156,8 +145,7 @@ CommandArgument='<%#Bind("P_id") %>'></asp:Button>
             <%--VIEW3 FOR ADDING NEW PROJECT--%>
             <asp:View ID="View3" runat="server">
                 
-              <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
-                <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
+              
              <div id="table">
                   <asp:ScriptManager ID="ScriptManager1" runat="server">
                   </asp:ScriptManager>
@@ -190,7 +178,7 @@ CommandArgument='<%#Bind("P_id") %>'></asp:Button>
                      
                     <td>
                     
-                        <asp:DropDownList ID="tech1" runat="server" CssClass="drop1" OnSelectedIndexChanged="tech1_SelectedIndexChanged" AutoPostBack="true" >
+                        <asp:DropDownList ID="tech1" runat="server" CssClass="drop1" >
                             <asp:ListItem>select </asp:ListItem>
                             <asp:ListItem Value=".Net">.Net</asp:ListItem>
                             <asp:ListItem Value="Php">Php</asp:ListItem>
@@ -265,10 +253,7 @@ CommandArgument='<%#Bind("P_id") %>'></asp:Button>
                 <asp:Label ID="Label3" runat="server" Text="Tamil"></asp:Label>
             </asp:View>
              <asp:View ID="View5" runat="server">
-    <asp:Button ID="Button1" runat="server" Text="Select Employees" OnClick="Button1_Click" />
-   
-    <asp:ListBox ID="ListBox4" runat="server" OnSelectedIndexChanged="ListBox1_SelectedIndexChanged" SelectionMode="Multiple" Height="98px" Width="169px"></asp:ListBox>
-     <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Add Employess" Width="141px" />
+    
             </asp:View>
             <%--VIEW3 ENDS HERE--%>
 
