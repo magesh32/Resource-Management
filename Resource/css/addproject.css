@@ -1,0 +1,70 @@
+﻿
+#table
+{
+    border: 2px solid black;
+    margin: 50px 0 0 226px;
+    width: 1084px;
+    height: 1000px;
+    
+}
+input
+{
+    
+    margin:0 0 7px 65px;
+}
+.drop1
+{
+    margin: 0 0 0 65px;
+    height: 20px;
+    width: 150px;
+}
+.drop2
+{
+   margin: 0px 0px 0px 70px;
+    width: 108px;
+}
+.lbl
+{
+   margin: 0px 0px 0px 66px;
+    width: 141px;
+}
+.lbl1
+{
+    margin: -154px 0px 0px 718px;
+    position: absolute;
+    width: 150px;
+    top: 1354px;
+    left: 21px;
+}
+.btn1
+{
+    margin: 20px 0 0 180px;
+    height: 25px;
+    width: 89px;
+}
+.btn2
+{
+    margin: 20px 0 0 63px;
+    height: 25px;
+    width: 89px;
+}
+span
+{
+    font-size: 17px;
+   margin:0px 13px 0px 34px;
+}
+h2
+{
+    color: #8E8C5A;
+    height: 20px;
+    margin: 27px 0 30px 140px;
+    font-style: oblique;
+}
+
+.error
+{
+    color: red;
+}
+
+
+

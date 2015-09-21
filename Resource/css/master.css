@@ -1,0 +1,26 @@
+﻿*
+{
+    margin:0px;
+    padding:0px;
+}
+header
+{
+    border:20px solid #663300;
+    height: 72px;
+    /*width:97%;*/
+    background-color:#663300;
+}
+h1
+{
+       color: beige;
+    font-size:24px;
+    margin-top:10px;
+    margin-left:500px;
+    font-weight:bold;
+}
+footer
+{
+    height: 50px;
+    background-color: #A0522D;
+}
+

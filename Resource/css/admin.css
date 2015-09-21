@@ -1,0 +1,80 @@
+﻿body
+{
+    background-color: #FFEFD5;
+}
+.logo
+{
+   font-style: oblique;
+    font-size: 26px;
+    color: #B32A8F;
+    margin-left: 40px;
+}
+.desi
+{
+    margin: 10px 0 0 8px;
+    font-size: 18px;
+}
+.link
+{
+    float:right;
+    width:80px;
+    font-size:18px;
+    
+}
+.add
+{
+  margin: 20px 0 0 109px;
+    width: 187px;
+    height: 147px;
+    font-size: 15px;
+}
+.remove
+{
+   margin: 20px 0 0 5px;
+    width: 187px;
+    height: 147px;
+    font-size: 15px;
+}
+.Add
+{
+        width: 114px;
+    height: 33px;
+    background-color:#DEB887;
+    color:#B22222;
+}
+    
+.Remove
+{
+        margin: 0 0 0 79px;
+        width: 114px;
+    height: 33px;
+    background-color:#DEB887;
+    color: #B22222;
+}
+#admin
+{
+   margin: 80px 0 0 95px;
+    height: 500px;
+    width: 996px;
+   
+}
+#labels
+{
+    margin: 0 0 0 0px;
+}
+.manager1
+{
+    margin: 51px 0 0 218px;
+    font-size: 21px;
+    color: #B1853F;
+    font-weight: bold;
+    position: absolute;
+}
+.manager0
+{
+    margin: 51px 0 0 832px;
+    font-size: 21px;
+    color: #B1853F;
+    font-weight: bold;
+    position: absolute;
+}

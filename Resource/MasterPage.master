@@ -1,0 +1,31 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    
+    <title></title>
+    <link href="css/master.css" rel="stylesheet" />
+        <asp:ContentPlaceHolder id="head" runat="server">      
+    </asp:ContentPlaceHolder>
+      
+</head>
+    <header>
+        <h1>RESOURCE MANAGEMENT<asp:Image ID="Image1" ImageUrl="images/ameex2.jpg" runat="server" style="z-index: 1; left: 44px; top: 21px; position: absolute; width: 201px; height: 40px" />
+        </h1>
+    </header>
+    
+       
+<body>
+    
+    <form id="form1" runat="server">
+    
+
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">        
+        </asp:ContentPlaceHolder>
+    
+    </form>
+</body>
+    
+</html>
