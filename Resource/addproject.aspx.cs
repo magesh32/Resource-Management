@@ -8,13 +8,15 @@ using System.Web.UI.WebControls;
 
 public partial class addproject : System.Web.UI.Page
 {
-    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
-
+    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
+    int b;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            int b = Convert.ToInt32(Session["Emp_Id"]);
+
+            b = Convert.ToInt32(Session["Emp_Id"]);
+            //}
 
             sqlConnn.Open();
             SqlCommand mycommand = new SqlCommand("select emp_name,role,technology from Employee where emp_id=@id ", sqlConnn);
@@ -31,68 +33,8 @@ public partial class addproject : System.Web.UI.Page
 
             read.Close();
             sqlConnn.Close();
-            Session.Add("Tech", tech1.Text);
-
-            string jun = "Junior_Developer";
-            SqlConnection sqlConn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
-            sqlConn.Open();
-            SqlCommand mycommand3 = new SqlCommand("select emp_name from Employee where manager=@emp and role=@roll", sqlConn);
-            mycommand3.Parameters.AddWithValue("@emp", b);
-            mycommand3.Parameters.AddWithValue("@roll", jun);
 
 
-
-            SqlDataReader read3 = mycommand3.ExecuteReader();
-            junior.Items.Clear();
-
-            while (read3.Read())
-            {
-                var item = new ListItem();
-                item.Text = read3["emp_name"].ToString();
-                item.Value = read3["emp_name"].ToString();
-                junior.Items.Add(item);
-            }
-            read3.Close();
-            sqlConn.Close();
-            string sen = "Senior_Developer";
-
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
-            sqlCon.Open();
-            SqlCommand mycomman = new SqlCommand("select emp_name from Employee where manager=@emp and role=@rol", sqlCon);
-            mycomman.Parameters.AddWithValue("@emp", b);
-            mycomman.Parameters.AddWithValue("@rol", sen);
-
-
-            SqlDataReader rea = mycomman.ExecuteReader();
-            senior.Items.Clear();
-            while (rea.Read())
-            {
-                var item = new ListItem();
-                item.Text = rea["emp_name"].ToString();
-                item.Value = rea["emp_name"].ToString();
-                senior.Items.Add(item);
-            }
-            rea.Close();
-            sqlCon.Close();
-            string tec = "Tech_Lead";
-
-            SqlConnection sqlCo = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
-            sqlCo.Open();
-            SqlCommand mycomma = new SqlCommand("select emp_name from Employee where manager=@emp and role=@ro", sqlCo);
-            mycomma.Parameters.AddWithValue("@emp", b);
-            mycomma.Parameters.AddWithValue("@ro", tec);
-            SqlDataReader re = mycomma.ExecuteReader();
-            techlead.Items.Clear();
-            while (re.Read())
-            {
-                var item = new ListItem();
-                item.Text = re["emp_name"].ToString();
-                item.Value = re["emp_name"].ToString();
-                techlead.Items.Add(item);
-            }
-            re.Close();
-            sqlCo.Close();
-            //}
 
             if (tech1.Text == ".Net")
             {
@@ -125,11 +67,77 @@ public partial class addproject : System.Web.UI.Page
                 frame.Items.FindByValue("Joomla").Enabled = true;
             }
         }
+
+
+
     }
-   
+
+    protected void Page_PreRender(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            
+            string jun = "Junior_Developer";
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;Integrated Security=True");
+            sqlConn.Open();
+            SqlCommand mycommand3 = new SqlCommand("select emp_name from Employee where manager=@emp and role=@roll", sqlConn);
+            mycommand3.Parameters.AddWithValue("@emp", b);
+            mycommand3.Parameters.AddWithValue("@roll", jun);
+            SqlDataReader read3 = mycommand3.ExecuteReader();
+            junior.Items.Clear();
+
+            while (read3.Read())
+            {
+                var item = new ListItem();
+                item.Text = read3["emp_name"].ToString();
+                item.Value = read3["emp_name"].ToString().Replace(" ", "");
+                junior.Items.Add(item);
+            }
+            read3.Close();
+            sqlConn.Close();
+            string sen = "Senior_Developer";
+
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;Integrated Security=True");
+            sqlCon.Open();
+            SqlCommand mycomman = new SqlCommand("select emp_name from Employee where manager=@emp and role=@rol", sqlCon);
+            mycomman.Parameters.AddWithValue("@emp", b);
+            mycomman.Parameters.AddWithValue("@rol", sen);
+
+
+            SqlDataReader rea = mycomman.ExecuteReader();
+            senior.Items.Clear();
+            while (rea.Read())
+            {
+                var item = new ListItem();
+                item.Text = rea["emp_name"].ToString();
+                item.Value = rea["emp_name"].ToString();
+                senior.Items.Add(item);
+            }
+            rea.Close();
+            sqlCon.Close();
+            string tec = "Tech_Lead";
+
+            SqlConnection sqlCo = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;Integrated Security=True");
+            sqlCo.Open();
+            SqlCommand mycomma = new SqlCommand("select emp_name from Employee where manager=@emp and role=@ro", sqlCo);
+            mycomma.Parameters.AddWithValue("@emp", b);
+            mycomma.Parameters.AddWithValue("@ro", tec);
+            SqlDataReader re = mycomma.ExecuteReader();
+            techlead.Items.Clear();
+            while (re.Read())
+            {
+                var item = new ListItem();
+                item.Text = re["emp_name"].ToString();
+                item.Value = re["emp_name"].ToString();
+                techlead.Items.Add(item);
+            }
+            re.Close();
+            sqlCo.Close();
+        }
+    }
     protected float CalculateTotalHours()
     {
-        SqlConnection sqlCo = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
+        SqlConnection sqlCo = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;Integrated Security=True");
         sqlCo.Open();
         var keys = Request.Form.AllKeys.Where(x => x.Contains("Hours"));
         float total = 0;
@@ -169,10 +177,10 @@ public partial class addproject : System.Web.UI.Page
 
     protected void ManipulateRows(ListBox listControl, string uniqueKey)
     {
-        SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
+        SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;Integrated Security=True");
         sqlConnn.Open();
 
-        if (listControl.SelectedIndex !=-1)
+        if (listControl.SelectedIndex != -1)
         {
             List<Employee> emplList = (List<Employee>)Application["SelectedEmployees"];
             for (int i = 0; i < listControl.Items.Count; i++)
@@ -183,7 +191,7 @@ public partial class addproject : System.Web.UI.Page
                     System.Web.UI.HtmlControls.HtmlTableCell col = new System.Web.UI.HtmlControls.HtmlTableCell();
                     Label Lbl = new Label();
                     Lbl.Text = "Capacity of " + listControl.Items[i].Text;
-                    Lbl.ID = "lbl" + uniqueKey + i.ToString();
+                    Lbl.ID = ("lbl" + uniqueKey + i.ToString()).Replace(" ", "");
                     Lbl.ForeColor = System.Drawing.Color.Black;
                     col.Controls.Add(Lbl);
                     tr.Cells.Add(col);
@@ -201,7 +209,7 @@ public partial class addproject : System.Web.UI.Page
                         empl.role = reader["role"].ToString();
                         var balanceCapacity = reader["Balance_Capacity"] != null ? reader["Balance_Capacity"].ToString() : null;
                         var originalCapacity = reader["Original_Capacity"] != null ? reader["Original_Capacity"].ToString() : null;
-                        
+
                         if (balanceCapacity != null ? !string.IsNullOrEmpty(balanceCapacity) : false)
                             int.TryParse(balanceCapacity, out maxCapacity);
                         else
@@ -216,7 +224,7 @@ public partial class addproject : System.Web.UI.Page
 
                     System.Web.UI.HtmlControls.HtmlTableCell col1 = new System.Web.UI.HtmlControls.HtmlTableCell();
                     TextBox txt = new TextBox();
-                    txt.ID = "Hours" + listControl.Items[i].Text;
+                    txt.ID = "Hours" + listControl.Items[i].Value;
                     txt.ClientIDMode = ClientIDMode.Static;
                     txt.Width = 150;
                     txt.Attributes.Add("maxCapacity", empl.maxCapacity.ToString());
@@ -241,7 +249,7 @@ public partial class addproject : System.Web.UI.Page
 
 
 
-    
+
 
     protected void btn1_Click(object sender, EventArgs e)
     {
@@ -253,9 +261,9 @@ public partial class addproject : System.Web.UI.Page
         var totally = (totalHours / 5) * weekdays;
         if (totally >= Convert.ToInt32(duration.Text))
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;Integrated Security=True");
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;Integrated Security=True");
             sqlCon.Open();
-            string que = "INSERT INTO projectlist(P_name, Client,technology,Duration,start_date,end_date,Manager_Id,Total_capacity,SOW,SOW_status) values (@name,@client,@tech,@duration,@sdate,@edate,@id,@total,@sow,@status);" + "select Scope_Identity();";
+            string que = "INSERT INTO projectlist(P_name, Client,technology,Duration,typeof_tech,framework,start_date,end_date,Manager_Id,Total_capacity,SOW,SOW_status,Flag) values (@name,@client,@tech,@duration,@typeoftech,@frame,@sdate,@edate,@id,@total,@sow,@status,@flag);" + "select Scope_Identity();";
             object p_id;
             SqlCommand myCom = new SqlCommand(que, sqlCon);
             myCom.Parameters.AddWithValue("@name", pro_name1.Text);
@@ -264,6 +272,9 @@ public partial class addproject : System.Web.UI.Page
             myCom.Parameters.AddWithValue("@duration", duration.Text);
             myCom.Parameters.AddWithValue("@sdate", sdate1.Text);
             myCom.Parameters.AddWithValue("@edate", edate1.Text);
+            myCom.Parameters.AddWithValue("@typeoftech", typeoftech1.Text);
+            myCom.Parameters.AddWithValue("@frame", frame.SelectedValue);
+            myCom.Parameters.AddWithValue("@flag", 0);
             int b = Convert.ToInt32(Session["Emp_Id"]);
             myCom.Parameters.AddWithValue("@id", b);
             myCom.Parameters.AddWithValue("@total", totalHours);
@@ -315,7 +326,7 @@ public partial class addproject : System.Web.UI.Page
             comm.Parameters.AddWithValue("@pid", p_id);
             comm.Parameters.AddWithValue("@project_id", prefix);
             comm.ExecuteNonQuery();
-            ShowData();
+            //ShowData();
 
             sqlCon.Close();
 
@@ -324,13 +335,15 @@ public partial class addproject : System.Web.UI.Page
             foreach (Employee emp in emplList)
             {
                 sqlCon.Open();
-                string queries = "INSERT INTO pro_resources(P_id,Emp_id,Role,Capacity,added_date) values (@pid1,@eid,@role,@capacity,@added)";
+                string queries = "INSERT INTO pro_resources(P_id,Emp_id,Role,Capacity,added_date,Flag,Status) values (@pid1,@eid,@role,@capacity,@added,@flag,@status)";
                 SqlCommand comm1 = new SqlCommand(queries, sqlCon);
                 comm1.Parameters.AddWithValue("@pid1", p_id);
                 comm1.Parameters.AddWithValue("@eid", emp.id);
                 comm1.Parameters.AddWithValue("@role", emp.role);
                 comm1.Parameters.AddWithValue("@capacity", emp.value);
+                comm1.Parameters.AddWithValue("@flag", 0);
                 comm1.Parameters.AddWithValue("@added", sdate1.Text);
+                comm1.Parameters.AddWithValue("@status", "on project");
                 comm1.ExecuteNonQuery();
                 comm1.Dispose();
                 sqlCon.Close();
@@ -338,7 +351,7 @@ public partial class addproject : System.Web.UI.Page
                 //Update Balance Hours
                 float balanceCapacity = float.Parse(emp.maxCapacity.ToString()) - emp.value;
 
-                
+
                 if (balanceCapacity >= 1)
                 {
                     sqlCon.Open();
@@ -348,7 +361,7 @@ public partial class addproject : System.Web.UI.Page
                     com1.ExecuteScalar();
                     sqlCon.Close();
                 }
-                else 
+                else
                 {
                     sqlCon.Open();
                     SqlCommand cmd1 = new SqlCommand("update Employee set Balance_Capacity = '" + balanceCapacity + "', Pro_flag=@a where emp_id=@id", sqlCon);
@@ -361,7 +374,7 @@ public partial class addproject : System.Web.UI.Page
             }
 
 
-
+            ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('project added successfully');", true);
 
             sqlCon.Close();
             //Response.Redirect("login.aspx");
@@ -372,12 +385,18 @@ public partial class addproject : System.Web.UI.Page
         }
     }
 
-    private void ShowData()
-   {
- 	  throw new NotImplementedException();
-   }
+    //private void ShowData()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    
+
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session["Emp_Id"] = null;
+        Response.Redirect("~/login.aspx");
+    }
 }
 public class Employee
 {
@@ -393,8 +412,8 @@ public class Employee
     {
         int noofdays = 0;
         int count = 0;
-        if (DateTime.Compare(start, end) == 1)
-            Console.WriteLine("entered date should be in startdate < enddate");
+        //if (DateTime.Compare(start, end) == 1)
+        //    Console.WriteLine("entered date should be in startdate < enddate");
         while (DateTime.Compare(start, end) <= 0)
         {
             if (start.DayOfWeek != DayOfWeek.Saturday && start.DayOfWeek != DayOfWeek.Sunday)

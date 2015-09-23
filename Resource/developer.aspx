@@ -7,20 +7,23 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
      <div  id="menu">
      <ul>
-        <li><asp:LinkButton ID="LinkButton1" runat="server"  OnClick="LinkButton1_Click" >Projects</asp:LinkButton></li>
-        <li><asp:LinkButton ID="LinkButton2" runat="server"  OnClick="LinkButton2_Click">Resources</asp:LinkButton></li>
+        <li><asp:LinkButton ID="link_projects" runat="server"  OnClick="LinkButton1_Click" >Projects</asp:LinkButton></li>
+        <li><asp:LinkButton ID="link_resources" runat="server"  OnClick="LinkButton2_Click">Resources</asp:LinkButton></li>
     </ul>
+          <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
+               <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>        
+
     </div>
            
-        <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
-        <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
-        <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>        
+       
+        <asp:LinkButton ID="link_logout" CssClass="link" runat="server" OnClick="linkbutton7_Click">Logout</asp:LinkButton>
+         
         <asp:MultiView ID="MultiView1" runat="server">
 
             <%--VIEW1 FOR SHOWING PROJECTS UNDER MANAGER--%>
             <asp:View ID="View1" runat="server">    
  <div id="grid4">
-    <asp:GridView ID="GridView1" CssClass="GridStyle" runat   ="server" AutoGenerateColumns="False"  DataSourceID="SqlDataSource1">
+    <asp:GridView ID="grid_projects" CssClass="GridStyle" runat   ="server" AutoGenerateColumns="False"  DataSourceID="SqlDataSource1">
         <Columns>
             <asp:BoundField DataField="P_id" HeaderText="project_id" ReadOnly="True" SortExpression="P_id" />
             <asp:BoundField DataField="P_name" HeaderText="project_name" SortExpression="P_name" />
@@ -50,18 +53,18 @@ join pro_resources rsc on emp.emp_id=rsc.emp_id and rsc.emp_id=@session)">
         <tr>
             <td>
   
-    <asp:Label ID="Label1" runat="server" Text="Enter your Project Id"></asp:Label>
+    <asp:Label ID="lbl_id" runat="server" Text="Enter your Project Id"></asp:Label>
                 </td>
            <td>
-               <asp:DropDownList ID="DropDownList1" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" style="height: 20px"></asp:DropDownList>
+               <asp:DropDownList ID="drop_id" runat="server" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" style="height: 20px"></asp:DropDownList>
            </td>
             </tr>
         <tr><td></td><td>
-            <asp:Button ID="Button1" runat="server" Text="Show" OnClick="Button1_Click1" /></td></tr>
+            <asp:Button ID="btn_show" runat="server" Text="Show" OnClick="Button1_Click1" /></td></tr>
      </table>
   </div>
                 <div id="front1">  
-    <asp:GridView ID="GridView3" CssClass="GridStyle" runat="server">
+    <asp:GridView ID="grid_resources" CssClass="GridStyle" runat="server">
                 </asp:GridView>
    </div>
                 </asp:View>

@@ -19,15 +19,17 @@
         <li><a href="addresource.aspx">Add New Resource</a></li>
       
     </ul>
+        <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
+         <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>
+   
     </div>
-    <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
-    <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
-    <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>
+    <asp:LinkButton ID="link_logout" CssClass="link" runat="server" OnClick="linkbutton8_Click">Logout</asp:LinkButton>
+   
     
                 <div id="grid">
-               <asp:GridView ID="GridView3" AutoGenerateColumns="false" Width="900px" runat="server" CellPadding="6"  OnRowCommand="GridView3_RowCommand">  
-              <HeaderStyle BackColor="#663300" ForeColor="#ffffff" Height="45px" Font-Size="18px"/>  
-            <RowStyle BackColor="#e7ceb6" Height="30px" Font-Size="17px"/> 
+               <asp:GridView ID="grid_projects" AutoGenerateColumns="false" Width="900px" runat="server" CellPadding="6"  OnRowCommand="GridView3_RowCommand">  
+              <HeaderStyle BackColor="#196763" ForeColor="#ffffff" Height="45px" Font-Size="18px"/>  
+            <RowStyle BackColor="#C7CECD" Height="30px" Font-Size="17px"/> 
                    <Columns> 
                     
                  <%--PROJECT_NAME COLUMN--%>

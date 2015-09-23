@@ -17,12 +17,12 @@ public partial class newpass : System.Web.UI.Page
     {
         string email = (string)(Session["emailid"]);
 
-        if (TextBox3.Text.ToString() == email)
+        if (txt_emailid.Text.ToString() == email)
         {
-            SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+            SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
             conn.Open();
-            SqlCommand UpdateCommand = new SqlCommand("UPDATE Employee SET password=@pass where email_id='" + TextBox3.Text + "' ", conn);
-            UpdateCommand.Parameters.Add("@pass", System.Data.SqlDbType.VarChar).Value = TextBox1.Text;
+            SqlCommand UpdateCommand = new SqlCommand("UPDATE Employee SET password=@pass where email_id='" + txt_emailid.Text + "' ", conn);
+            UpdateCommand.Parameters.Add("@pass", System.Data.SqlDbType.VarChar).Value = txt_pwd.Text;
             UpdateCommand.ExecuteNonQuery();
             conn.Close();
             Response.Redirect("login.aspx");

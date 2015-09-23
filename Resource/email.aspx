@@ -6,9 +6,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <h2>FORGET YOUR PASSWORD?</h2>
     <div id="email">
-    <asp:Label ID="Label1" runat="server" Text="Email"></asp:Label>
-    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-    <asp:Button ID="Button1" runat="server" Text="submit" OnClick="Button1_Click" />
+    <asp:Label ID="lbl_email" runat="server" Text="Email"></asp:Label>
+    <asp:TextBox ID="txt_email" runat="server"></asp:TextBox>
+    <asp:Button ID="btn_submit" runat="server" Text="submit" OnClick="Button1_Click" />
     </div>
 </asp:Content>
 

@@ -1,14 +1,16 @@
 ﻿*
 {
-    margin:0px;
     padding:0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
 }
 header
 {
-    border:20px solid #663300;
-    height: 72px;
+    border:20px solid #008080;
+    height: 60px;
     /*width:97%;*/
-    background-color:#663300;
+    background-color:#008080;
 }
 h1
 {

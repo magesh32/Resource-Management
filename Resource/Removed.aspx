@@ -6,11 +6,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
      <div id="menu3">
      <ul>
-         <li><asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click">Deleted projects</asp:LinkButton></li>
-          <li><asp:LinkButton ID="LinkButton4" runat="server" OnClick="LinkButton4_Click">Deleted resources</asp:LinkButton></li>
+         <li><asp:LinkButton ID="link_delproject" runat="server" OnClick="LinkButton3_Click">Deleted projects</asp:LinkButton></li>
+          <li><asp:LinkButton ID="link_delresource" runat="server" OnClick="LinkButton4_Click">Deleted resources</asp:LinkButton></li>
         
     </ul>
-           <asp:LinkButton ID="LinkButton1" runat="server" CssClass="back" OnClick="LinkButton1_Click" >Back</asp:LinkButton>
+           <asp:LinkButton ID="link_back" runat="server" CssClass="back" OnClick="LinkButton1_Click" >Back</asp:LinkButton>
     </div>
 
      <asp:MultiView ID="MultiView1" runat="server">
@@ -19,10 +19,10 @@
           
         <asp:View ID="View1" runat="server"> 
              <div id="project" >
-         <asp:GridView ID="GridView4"  AutoGenerateColumns="false" DataKeyNames="P_id" runat="server" >  
+         <asp:GridView ID="grid_delproject"  AutoGenerateColumns="false" DataKeyNames="P_id" runat="server" >  
             
-          <HeaderStyle BackColor="#663300"  height="45px" ForeColor="#ffffff" Font-Bold="true" Font-Size="18px"/> 
-        <rowstyle Height="35px" Font-Size="17px" BackColor="#e7ceb6"/>
+          <HeaderStyle BackColor="#196763"  height="45px" ForeColor="#ffffff" Font-Bold="true" Font-Size="18px"/> 
+        <rowstyle Height="35px" Font-Size="17px" BackColor="#C7CECD"/>
             <Columns> 
                
                 <%--PROJECT_ID--%>
@@ -99,9 +99,9 @@
 
         <asp:View ID="View2" runat="server"> 
              <div id="resource">
-    <asp:GridView ID="GridView2" Width ="700px" AutoGenerateColumns="false" DataKeyNames="P_id"  runat="server" CellPadding="6">  
-        <HeaderStyle BackColor="#663300"  height="45px" ForeColor="#ffffff" Font-Bold="true" Font-Size="18px"/> 
-        <rowstyle Height="35px" Font-Size="17px" BackColor="#e7ceb6"/>
+    <asp:GridView ID="grid_delresource" Width ="700px" AutoGenerateColumns="false" DataKeyNames="P_id"  runat="server" CellPadding="6">  
+        <HeaderStyle BackColor="#196763"  height="45px" ForeColor="#ffffff" Font-Bold="true" Font-Size="18px"/> 
+        <rowstyle Height="35px" Font-Size="17px" BackColor="#C7CECD"/>
           <Columns> 
                 <%--PROJECT_ID--%>
                 <asp:TemplateField HeaderText="Project_Id" HeaderStyle-Width="150px">  

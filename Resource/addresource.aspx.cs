@@ -8,54 +8,57 @@ using System.Web.UI.WebControls;
 
 public partial class addresource : System.Web.UI.Page
 {
-    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
     int b;
     string technology = string.Empty;
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["Tech"].ToString() != null && Session["Emp_Id"].ToString()!=null)
+        if (Session["Emp_Id"] == null)
         {
-            technology = Session["Tech"].ToString();
-
+            Response.Redirect("~/login.aspx");
+        }
+        else
+        {
             b = Convert.ToInt32(Session["Emp_Id"].ToString());
-        }
-        sqlConnn.Open();
-        SqlCommand mycommand = new SqlCommand("select emp_name,role from Employee where emp_id=@id ", sqlConnn);
-        mycommand.Parameters.AddWithValue("@id", b);
 
-        SqlDataReader read = mycommand.ExecuteReader();
+            sqlConnn.Open();
+            SqlCommand mycommand = new SqlCommand("select emp_name,role,technology from Employee where emp_id=@id ", sqlConnn);
+            mycommand.Parameters.AddWithValue("@id", b);
 
-        if (read.Read())
-        {
-            lblin.Text = "Welcome, " + read["emp_name"].ToString();
-            desig.Text = "Designation: " + read["role"].ToString();
+            SqlDataReader read = mycommand.ExecuteReader();
 
-        }
+            if (read.Read())
+            {
+                lblin.Text = "Welcome, " + read["emp_name"].ToString();
+                desig.Text = "Designation: " + read["role"].ToString();
+                technology = read["technology"].ToString();
+            }
 
-        read.Close();
-        sqlConnn.Close();
-        if (!IsPostBack)
-        {
-            add();
-            remove();
+            read.Close();
+            sqlConnn.Close();
+            if (!IsPostBack)
+            {
+                add();
+                remove();
+            }
         }
     }
     protected void add()
     {
-        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
 
         conn.Open();
-        SqlCommand com = new SqlCommand("select emp_name from Employee where role<>'manager' AND role<>'admin' AND flag<>1 AND technology=@tech", conn);
+        SqlCommand com = new SqlCommand("select emp_name from Employee where role<>'Manager' AND role<>'Admin' AND flag<>1 AND technology=@tech", conn);
          com.Parameters.AddWithValue("@tech", technology);
         SqlDataReader sdr = com.ExecuteReader();
-        ListBox4.Items.Clear();
+       list_add.Items.Clear();
         while (sdr.Read())
         {
             ListItem name = new ListItem();
             name.Text = sdr["emp_name"].ToString();
             name.Value = sdr["emp_name"].ToString();
-            ListBox4.Items.Add(name);
-            ListBox4.Rows = ListBox4.Items.Count;
+            list_add.Items.Add(name);
+            list_add.Rows = list_add.Items.Count;
 
         }
         com.Dispose();
@@ -65,18 +68,18 @@ public partial class addresource : System.Web.UI.Page
     protected void remove()
     {
         string id = (string)(Session["Emp_Id"]);
-        SqlConnection co = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+        SqlConnection co = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
         co.Open();
         SqlCommand com1 = new SqlCommand("select emp_name from Employee where manager='" + id + "'", co);
         SqlDataReader sdr1 = com1.ExecuteReader();
-        ListBox5.Items.Clear();
+        list_remove.Items.Clear();
         while (sdr1.Read())
         {
             ListItem name1 = new ListItem();
             name1.Text = sdr1["emp_name"].ToString();
             name1.Value = sdr1["emp_name"].ToString();
-            ListBox5.Items.Add(name1);
-            ListBox5.Rows = ListBox5.Items.Count;
+            list_remove.Items.Add(name1);
+            list_remove.Rows = list_remove.Items.Count;
         }
         com1.Dispose();
         co.Close();
@@ -86,21 +89,21 @@ public partial class addresource : System.Web.UI.Page
     {
 
 
-        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
         conn.Open();
 
 
         string eid = (string)(Session["empid"]);
         string l = string.Empty;
 
-        if (ListBox5.SelectedIndex > -1)
+        if (list_remove.SelectedIndex > -1)
         {
 
-            List<int> select = ListBox5.GetSelectedIndices().ToList();
+            List<int> select = list_remove.GetSelectedIndices().ToList();
             for (int i = 0; i < select.Count; i++)
             {
                 int a = 0;
-                l = ListBox5.Items[select[i]].ToString();
+                l = list_remove.Items[select[i]].ToString();
                 SqlCommand command = new SqlCommand("update Employee set manager='',flag='" + a + "' where emp_name=@len", conn);
                 command.Parameters.AddWithValue("@len", l);
                 command.ExecuteNonQuery();
@@ -120,21 +123,21 @@ public partial class addresource : System.Web.UI.Page
     protected void Button2_Click(object sender, EventArgs e)
     {
 
-        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+        SqlConnection conn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
         conn.Open();
 
 
         string eid = (string)(Session["Emp_Id"]);
         string l = string.Empty;
 
-        if (ListBox4.SelectedIndex > -1)
+        if (list_add.SelectedIndex > -1)
         {
 
-            List<int> select = ListBox4.GetSelectedIndices().ToList();
+            List<int> select = list_add.GetSelectedIndices().ToList();
             for (int i = 0; i < select.Count; i++)
             {
                 int a = 1;
-                l = ListBox4.Items[select[i]].ToString();
+                l = list_add.Items[select[i]].ToString();
                 SqlCommand command = new SqlCommand("update Employee set manager=@eid,flag=@flag where emp_name=@len", conn);
                 command.Parameters.AddWithValue("@flag", a);
                 command.Parameters.AddWithValue("@len", l);
@@ -164,5 +167,11 @@ public partial class addresource : System.Web.UI.Page
         Page.Controls.Add(lblMessageBox);
 
     }
-   
+
+    protected void linkbutton2_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session["Emp_Id"] = null;
+        Response.Redirect("~/login.aspx");
+    }
 }

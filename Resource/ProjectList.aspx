@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.master" AutoEventWireup="true" CodeFile="ProjectList.aspx.cs" Inherits="ProjectList" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <link href="css/projects.css" rel="stylesheet" />
+   
      <link href="css/projectlist.css" rel="stylesheet" />
+     <link href="css/projects.css" rel="stylesheet" />
       <script src="js/jquery-1.11.0.js"></script>
     
     <script type="text/javascript">
@@ -15,25 +16,27 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
      <div  id="menu">
      <ul>
-        <li style ="background-color:#FFEFD5; margin: 5px 7px 0 36px;font-size: 17px;border-radius:5px;padding: 4px 0px;width: 155px;text-decoration: none;color: #800000;"><a href="manager.aspx">Projects</a></li>
+        <li style ="background-color:#B8D8D2; margin: 15px 7px 0 36px;font-size: 17px;border-radius:5px;padding: 4px 0px;width: 155px;text-decoration: none;color: #800000;"><a href="manager.aspx">Projects</a></li>
         <li><a href="resource.aspx">Resources</a></li>
         <li><a href="addproject.aspx">Add New Project</a></li>
         <li><a href="dash.aspx">Dashboard</a></li>
         <li><a href="addresource.aspx">Add New Resource</a></li>
       
     </ul>
+         <asp:Label ID="welcome" CssClass="log" runat ="server" Text="Label"></asp:Label>
+         <asp:Label ID="role" CssClass="des" runat ="server" Text="Label"></asp:Label>
          </div>
+    <asp:LinkButton ID="link_logout" CssClass="link" runat="server" OnClick="linkbut_Click">Logout</asp:LinkButton>
     
-    
-    <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
-    
+   
+   
 
     <div id="menu2">
      <ul>
-        <li><asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click1">Project details</asp:LinkButton></li>
-       <li><asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click1">Resource details</asp:LinkButton></li>
-          <li> <asp:LinkButton ID="LinkButton3" runat="server" OnClick="LinkButton3_Click">Add_Resource</asp:LinkButton></li>
-        <li><asp:LinkButton ID="LinkButton4" runat="server" OnClick="LinkButton4_Click">Removed List</asp:LinkButton></li>
+        <li><asp:LinkButton ID="link_projet" runat="server" OnClick="LinkButton1_Click1">Project details</asp:LinkButton></li>
+       <li><asp:LinkButton ID="link_resource" runat="server" OnClick="LinkButton2_Click1">Resource details</asp:LinkButton></li>
+          <li> <asp:LinkButton ID="link_addresource" runat="server" OnClick="LinkButton3_Click">Add Resource</asp:LinkButton></li>
+        <li><asp:LinkButton ID="link_remove" runat="server" OnClick="LinkButton4_Click">Removed List</asp:LinkButton></li>
         
     </ul>
     </div>
@@ -42,10 +45,10 @@
     <asp:MultiView ID="MultiView1" runat="server">
     <asp:View ID="View1" runat="server">    
            <div class="grid1">
-               <asp:GridView ID="GridView3" DataKeyNames ="P_id" AutoGenerateColumns="false" runat="server" CellPadding="6" OnRowCancelingEdit="GridView3_RowCancelingEdit"  
+               <asp:GridView ID="grid_project" DataKeyNames ="P_id" AutoGenerateColumns="false" runat="server" CellPadding="6" OnRowCancelingEdit="GridView3_RowCancelingEdit"  
   OnRowEditing="GridView3_RowEditing" OnRowUpdating="GridView3_RowUpdating" OnRowDeleting="GridView3_RowDeleting" OnRowDataBound="GridView3_RowDataBound" >
-        <HeaderStyle BackColor="#663300"  height="45px" ForeColor="#ffffff" Font-Bold="true" Font-Size="18px"/> 
-        <rowstyle Height="35px" Font-Size="17px" BackColor="#e7ceb6"/>
+        <HeaderStyle BackColor="#196763"  height="45px" ForeColor="#ffffff" Font-Bold="true" Font-Size="18px"/> 
+        <rowstyle Height="35px" Font-Size="17px" BackColor="#C7CECD"/>
           
          
            <Columns> 
@@ -151,11 +154,11 @@
                
         <asp:View ID="View2" runat="server">
             <div id="grid2"> 
-    <asp:GridView ID="GridView1" width="800px" DataKeyNames="P_id" AutoGenerateColumns ="false" runat="server" CellPadding="6" OnRowCancelingEdit="GridView1_RowCancelingEdit"  
+    <asp:GridView ID="grid_resource" width="800px" DataKeyNames="P_id" AutoGenerateColumns ="false" runat="server" CellPadding="6" OnRowCancelingEdit="GridView1_RowCancelingEdit"  
   
 OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" CssClass="GridStyle"  OnRowDeleting="GridView1_RowDeleting" OnRowDataBound="GridView1_RowDataBound"> 
-         <HeaderStyle BackColor="#663300"  height="45px" ForeColor="#ffffff" Font-Size="18px"/> 
-        <rowstyle Height="35px" Font-Size="17px" BackColor="#e7ceb6"/> 
+         <HeaderStyle BackColor="#196763"  height="45px" ForeColor="#ffffff" Font-Size="18px"/> 
+        <rowstyle Height="35px" Font-Size="17px" BackColor="#C7CECD"/> 
            <Columns> 
                
                 <%--PROJECT_ID--%>

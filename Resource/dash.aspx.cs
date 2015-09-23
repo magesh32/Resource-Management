@@ -10,106 +10,127 @@ using System.Web.UI.WebControls;
 
 public partial class dash : System.Web.UI.Page
 {
-    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false;MultipleActiveResultSets=True;");
+    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false;MultipleActiveResultSets=True;");
 
     Employee1 emp = new Employee1();
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-        if (!IsPostBack)
+        if (Session["Emp_Id"] == null)
         {
-            int b = Convert.ToInt32(Session["Emp_Id"]);
-            sqlConnn.Open();
-            SqlCommand mycommand = new SqlCommand("select emp_name,role from Employee where emp_id=@id ", sqlConnn);
-            mycommand.Parameters.AddWithValue("@id", b);
+            Response.Redirect("~/login.aspx");
+        }
+        else
+        {
 
-            SqlDataReader read = mycommand.ExecuteReader();
-
-            if (read.Read())
+            if (!IsPostBack)
             {
-                lblin.Text = "Welcome, " + read["emp_name"].ToString();
-                desig.Text = "Designation: " + read["role"].ToString();
+                int b = Convert.ToInt32(Session["Emp_Id"]);
+                sqlConnn.Open();
+                SqlCommand mycommand = new SqlCommand("select emp_name,role from Employee where emp_id=@id ", sqlConnn);
+                mycommand.Parameters.AddWithValue("@id", b);
 
+                SqlDataReader read = mycommand.ExecuteReader();
+
+                if (read.Read())
+                {
+                    lblin.Text = "Welcome, " + read["emp_name"].ToString();
+                    desig.Text = "Designation: " + read["role"].ToString();
+
+                }
+
+                read.Close();
+                sqlConnn.Close();
+                DateTime today = calender.TodaysDate;
+                overall_capacity(today);
             }
-
-            read.Close();
-            sqlConnn.Close();
-            DateTime today = Calendar1.TodaysDate;
-            overall_capacity(today);
         }
     }
 
     // CALENDER DATE SELECTION CHANGED
     protected void Calendar1_SelectionChanged(object sender, EventArgs e)
     {
-        DateTime cal = Calendar1.SelectedDate;
-        if (typeoftech1.SelectedIndex != 0)
-            if (Technology.SelectedIndex != 0)
-                if (Framework.SelectedIndex != 0)
-                    if (ProjectList.SelectedIndex != 0)
-                        project_one(Convert.ToInt32(ProjectList.SelectedValue), cal);
+        DateTime cal = calender.SelectedDate;
+        if (drop_typeoftech.SelectedIndex != 0)
+            if (drop_tech.SelectedIndex != 0)
+                if (drop_frame.SelectedIndex != 0)
+                    if (drop_Projectlist.SelectedIndex != 0)
+                        project_one(Convert.ToInt32(drop_Projectlist.SelectedValue), cal);
                     else
-                        frame_calculate(Framework.SelectedValue);
+                        frame_calculate(drop_frame.SelectedValue);
                 else
-                    tech_calculate(Technology.SelectedValue);
+                    tech_calculate(drop_tech.SelectedValue);
             else
-                type_of_tech_calculate(typeoftech1.SelectedValue);
+                type_of_tech_calculate(drop_typeoftech.SelectedValue);
         else
             overall_capacity(cal);
+    }
+
+    //calender render date
+
+    protected void Calendar1_DayRender(object sender, DayRenderEventArgs e)
+    {
+
+        if (e.Day.Date > DateTime.Today)
+        {
+            e.Day.IsSelectable = false;
+            //  e.Cell.BackColor = System.Drawing.Color.Empty;
+            e.Cell.ForeColor = System.Drawing.Color.DarkRed;
+        }
+
     }
 
     // TYPE OF PROJECT SELECTION CHANGED
 
     protected void typeoftech1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (typeoftech1.SelectedValue == "proprietary")
+        if (drop_typeoftech.SelectedValue == "Proprietary")
         {
-            Technology.Items.FindByValue(".Net").Enabled = true;
-            Technology.Items.FindByValue("Php").Enabled = false;
-            Technology.Items.FindByValue("Angular JS").Enabled = false;
+            drop_tech.Items.FindByValue(".Net").Enabled = true;
+            drop_tech.Items.FindByValue("Php").Enabled = false;
+            drop_tech.Items.FindByValue("Angular JS").Enabled = false;
         }
-        else if (typeoftech1.SelectedValue == "Open Source")
+        else if (drop_typeoftech.SelectedValue == "Open Source")
         {
-            Technology.Items.FindByValue(".Net").Enabled = false;
-            Technology.Items.FindByValue("Php").Enabled = true;
-            Technology.Items.FindByValue("Angular JS").Enabled = true;
+            drop_tech.Items.FindByValue(".Net").Enabled = false;
+            drop_tech.Items.FindByValue("Php").Enabled = true;
+            drop_tech.Items.FindByValue("Angular JS").Enabled = true;
         }
-        type_of_tech_calculate(typeoftech1.SelectedValue);
+        type_of_tech_calculate(drop_typeoftech.SelectedValue);
     }
 
     //TECHNOLOGY SELECTION CHANGED
     protected void Technology_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (Technology.SelectedValue == ".Net")
+        if (drop_tech.SelectedValue == ".Net")
         {
-            Framework.Items.FindByValue("Ektron").Enabled = true;
-            Framework.Items.FindByValue("Episerver").Enabled = true;
-            Framework.Items.FindByValue("Kentigo").Enabled = true;
-            Framework.Items.FindByValue("Sitecore").Enabled = true;
-            Framework.Items.FindByValue("Sharepoint").Enabled = true;
-            Framework.Items.FindByValue("Majento").Enabled = false;
-            Framework.Items.FindByValue("Drupal").Enabled = false;
-            Framework.Items.FindByValue("Jumla").Enabled = false;
+            drop_frame.Items.FindByValue("Ektron").Enabled = true;
+            drop_frame.Items.FindByValue("Episerver").Enabled = true;
+            drop_frame.Items.FindByValue("Kentigo").Enabled = true;
+            drop_frame.Items.FindByValue("Sitecore").Enabled = true;
+            drop_frame.Items.FindByValue("Sharepoint").Enabled = true;
+            drop_frame.Items.FindByValue("Majento").Enabled = false;
+            drop_frame.Items.FindByValue("Drupal").Enabled = false;
+            drop_frame.Items.FindByValue("Jumla").Enabled = false;
         }
-        else if (Technology.SelectedValue == "Php")
+        else if (drop_tech.SelectedValue == "Php")
         {
-            Framework.Items.FindByValue("Ektron").Enabled = false;
-            Framework.Items.FindByValue("Episerver").Enabled = false;
-            Framework.Items.FindByValue("Kentigo").Enabled = false;
-            Framework.Items.FindByValue("Sitecore").Enabled = false;
-            Framework.Items.FindByValue("Sharepoint").Enabled = false;
-            Framework.Items.FindByValue("Majento").Enabled = true;
-            Framework.Items.FindByValue("Drupal").Enabled = true;
-            Framework.Items.FindByValue("Jumla").Enabled = true;
+            drop_frame.Items.FindByValue("Ektron").Enabled = false;
+            drop_frame.Items.FindByValue("Episerver").Enabled = false;
+            drop_frame.Items.FindByValue("Kentigo").Enabled = false;
+            drop_frame.Items.FindByValue("Sitecore").Enabled = false;
+            drop_frame.Items.FindByValue("Sharepoint").Enabled = false;
+            drop_frame.Items.FindByValue("Majento").Enabled = true;
+            drop_frame.Items.FindByValue("Drupal").Enabled = true;
+            drop_frame.Items.FindByValue("Jumla").Enabled = true;
         }
-        tech_calculate(Technology.SelectedValue);
+        tech_calculate(drop_tech.SelectedValue);
     }
 
     // framework selection index changed
     protected void Framework_SelectedIndexChanged(object sender, EventArgs e)
     {
-        BindData(Framework.SelectedValue);
-        frame_calculate(Framework.SelectedValue);
+        BindData(drop_frame.SelectedValue);
+        frame_calculate(drop_frame.SelectedValue);
     }
 
     //DATA BINDING TO DROPDOWNLIST 2 FOR PROJECTLIST
@@ -119,23 +140,23 @@ public partial class dash : System.Web.UI.Page
         SqlDataAdapter adpt = new SqlDataAdapter(query, sqlConnn);
         DataTable dt = new DataTable();
         adpt.Fill(dt);
-        ProjectList.DataSource = dt;
-        ProjectList.DataBind();
-        ProjectList.DataTextField = "P_name";
-        ProjectList.DataValueField = "P_id";
-        ProjectList.DataBind();
-        ProjectList.Items.Insert(0, new ListItem("Select", "0"));
+        drop_Projectlist.DataSource = dt;
+        drop_Projectlist.DataBind();
+        drop_Projectlist.DataTextField = "P_name";
+        drop_Projectlist.DataValueField = "P_id";
+        drop_Projectlist.DataBind();
+        drop_Projectlist.Items.Insert(0, new ListItem("Select", "0"));
     }
 
     //FOR PROJECTLIST SELECTING INDEX CHANGED
 
     protected void ProjectList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int project_id = Convert.ToInt32(ProjectList.SelectedValue);
-        DateTime selected = Calendar1.SelectedDate;
+        int project_id = Convert.ToInt32(drop_Projectlist.SelectedValue);
+        DateTime selected = calender.SelectedDate;
         if (selected.Date == DateTime.MinValue)
         {
-            selected = Calendar1.TodaysDate;
+            selected = calender.TodaysDate;
         }
         project_one(project_id, selected);
     }
@@ -166,14 +187,14 @@ public partial class dash : System.Web.UI.Page
         if (totally_utilized != 0 && total_ideal != 0)
         {
             Utilized.Text = "Utilized Capacity is: " + totally_utilized;
-            Ideal.Text = "Ideal Capacity is: " + total_ideal;
-            Percentage.Text = "Utilized Percentage is: " + total_percentage + "%";
+            lbl_Ideal.Text = "Ideal Capacity is: " + total_ideal;
+            lbl_Percentage.Text = "Utilized Percentage is: " + total_percentage + "%";
         }
         else if (total_ideal == 0)
         {
             Utilized.Text = "There is no resource or project in the framework";
-            Ideal.Text = "";
-            Percentage.Text = "";
+            lbl_Ideal.Text = "";
+            lbl_Percentage.Text = "";
         }
     }
 
@@ -187,10 +208,10 @@ public partial class dash : System.Web.UI.Page
 
         int count, type_of_tech_org_capacity = 40, weekday;
         count = emp.type_of_tech_employee_count(type_of_tech);
-        DateTime selected = Calendar1.SelectedDate;
+        DateTime selected = calender.SelectedDate;
         if (selected.Date == DateTime.MinValue)
         {
-            selected = Calendar1.TodaysDate;
+            selected = calender.TodaysDate;
         }
         type_of_tech_utilized = type_of_technology(type_of_tech, selected);
         DateTime startDate = new DateTime(selected.Year, selected.Month, 1);
@@ -200,14 +221,14 @@ public partial class dash : System.Web.UI.Page
         if (type_of_tech_utilized != 0 && type_of_tech_ideal != 0)
         {
             Utilized.Text = "Utilized Capacity is: " + type_of_tech_utilized;
-            Ideal.Text = "Ideal Capacity is: " + type_of_tech_ideal;
-            Percentage.Text = "Utilized Percentage is: " + t_of_percentage + "%";
+            lbl_Ideal.Text = "Ideal Capacity is: " + type_of_tech_ideal;
+            lbl_Percentage.Text = "Utilized Percentage is: " + t_of_percentage + "%";
         }
         else if (type_of_tech_ideal == 0)
         {
             Utilized.Text = "There is no resource or project in the framework";
-            Ideal.Text = "";
-            Percentage.Text = "";
+            lbl_Ideal.Text = "";
+            lbl_Percentage.Text = "";
         }
     }
 
@@ -238,10 +259,10 @@ public partial class dash : System.Web.UI.Page
 
         int count, tech_org_capacity = 40, weekday;
         count = emp.tech_employee_count(name);
-        DateTime selected = Calendar1.SelectedDate;
+        DateTime selected = calender.SelectedDate;
         if (selected.Date == DateTime.MinValue)
         {
-            selected = Calendar1.TodaysDate;
+            selected = calender.TodaysDate;
         }
         tech_utilized = technology(name, selected);
         DateTime startDate = new DateTime(selected.Year, selected.Month, 1);
@@ -252,14 +273,14 @@ public partial class dash : System.Web.UI.Page
         if (tech_utilized != 0 && tech_ideal != 0)
         {
             Utilized.Text = "Utilized Capacity is: " + tech_utilized;
-            Ideal.Text = "Ideal Capacity is: " + tech_ideal;
-            Percentage.Text = "Utilized Percentage is: " + tech_percentage + "%";
+            lbl_Ideal.Text = "Ideal Capacity is: " + tech_ideal;
+            lbl_Percentage.Text = "Utilized Percentage is: " + tech_percentage + "%";
         }
         else if (tech_ideal == 0)
         {
             Utilized.Text = "There is no resource or project in the framework";
-            Ideal.Text = "";
-            Percentage.Text = "";
+            lbl_Ideal.Text = "";
+            lbl_Percentage.Text = "";
         }
     }
 
@@ -291,10 +312,10 @@ public partial class dash : System.Web.UI.Page
         float frame_ideal = 0.0f;
         int org_capacity = 40, weekday;
         float frame_percentage = 0.0f;
-        DateTime selected = Calendar1.SelectedDate;
+        DateTime selected = calender.SelectedDate;
         if (selected.Date == DateTime.MinValue)
         {
-            selected = Calendar1.TodaysDate;
+            selected = calender.TodaysDate;
         }
         arr1 = framework(frame, selected);
         DateTime startDate = new DateTime(selected.Year, selected.Month, 1);
@@ -307,14 +328,14 @@ public partial class dash : System.Web.UI.Page
         if ((float)arr1[0] != 0 && frame_ideal != 0)
         {
             Utilized.Text = "Utilized Capacity is: " + arr1[0];
-            Ideal.Text = "Ideal Capacity is: " + frame_ideal;
-            Percentage.Text = "Utilized Percentage is: " + frame_percentage + "%";
+            lbl_Ideal.Text = "Ideal Capacity is: " + frame_ideal;
+            lbl_Percentage.Text = "Utilized Percentage is: " + frame_percentage + "%";
         }
         else if (frame_ideal == 0)
         {
             Utilized.Text = "There is no resource or project in the framework";
-            Ideal.Text = "";
-            Percentage.Text = "";
+            lbl_Ideal.Text = "";
+            lbl_Percentage.Text = "";
         }
     }
 
@@ -328,9 +349,9 @@ public partial class dash : System.Web.UI.Page
             sqlConnn.Open();
         int p_count;
         int count = 0, p_id;
-        for (int i = 0; i < Framework.Items.Count; i++)
+        for (int i = 0; i < drop_frame.Items.Count; i++)
         {
-            if (Framework.Items[i].Text == frame)
+            if (drop_frame.Items[i].Text == frame)
             {
                 count = emp.employee_count(frame);
                 SqlCommand cmd1 = new SqlCommand("select P_id from projectlist where framework=@frame", sqlConnn);
@@ -367,30 +388,36 @@ public partial class dash : System.Web.UI.Page
         if (project_utilized != 0 && project_ideal != 0)
         {
             Utilized.Text = "Utilized Capacity is: " + project_utilized;
-            Ideal.Text = "Ideal Capacity is: " + project_ideal;
-            Percentage.Text = "Utilized Percentage is: " + project_percentage + "%";
+            lbl_Ideal.Text = "Ideal Capacity is: " + project_ideal;
+            lbl_Percentage.Text = "Utilized Percentage is: " + project_percentage + "%";
         }
         else if (project_ideal == 0)
         {
             Utilized.Text = "There is no resource in the project";
-            Ideal.Text = "";
-            Percentage.Text = "";
+            lbl_Ideal.Text = "";
+            lbl_Percentage.Text = "";
         }
         else
         {
             Utilized.Text = "Selected date is not in between project's start date and end date";
-            Ideal.Text = "";
-            Percentage.Text = "";
+            lbl_Ideal.Text = "";
+            lbl_Percentage.Text = "";
         }
     }
 
+    protected void linkbuto3_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session["Emp_Id"] = null;
+        Response.Redirect("~/login.aspx");
+    }
 }
 
 //EMPLOYEE1 CLASS
 
 public class Employee1
 {
-    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false;MultipleActiveResultSets=true");
+    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false;MultipleActiveResultSets=true");
 
     //ARRAY OF AMEEX HOLIDAYS
     DateTime[] ameexHolidays = new DateTime[] { new DateTime(2015, 01, 15), new DateTime(2015, 01, 26), new DateTime(2015, 05, 01), new DateTime(2015, 07, 03), new DateTime(2015, 07, 18), new DateTime(2015, 08, 15), new DateTime(2015, 09, 07), new DateTime(2015, 10, 02), new DateTime(2015, 11, 10), new DateTime(2015, 12, 25) };
@@ -428,7 +455,7 @@ public class Employee1
         int org_capacity = 40;
         int[] calculated = new int[3];
         int total_capacity = 0;
-       
+        int compare_today_start, compare_today_end;
         DateTime start = DateTime.MinValue, end = DateTime.MinValue;
         sqlConnn.Open();
         SqlCommand command = new SqlCommand("select start_date,end_date,Total_capacity from projectlist where P_id=@pro_id", sqlConnn);
@@ -442,87 +469,63 @@ public class Employee1
             end = Convert.ToDateTime(reader["end_date"]);
         }
         //COMPARING WHETHER TODAY IS BETWEEN PROJECT'S START_DATE AND END_DATE 
-      
+
         DateTime this_month = new DateTime(today.Year, today.Month, 1);
-       // IF PROJECT START DATE'S MONTH AND TODAY'S MONTH SAME AND CALCULATING WEEKDAYS 
-        if (start.Month == today.Month)
+        //COMPARING WHETHER TODAY IS BETWEEN PROJECT'S START_DATE AND END_DATE 
+        compare_today_start = DateTime.Compare(start, today);
+        compare_today_end = DateTime.Compare(end, today);
+
+        if ((compare_today_start <= 0 && compare_today_end >= 0))
         {
-            if (DateTime.Compare(start, this_month) >= 0)
+            // IF PROJECT START DATE'S MONTH AND TODAY'S MONTH SAME AND CALCULATING WEEKDAYS 
+            if (start.Month == today.Month)
             {
-                if (DateTime.Compare(end, today) >= 0)
-                {
-                    weekday = weekdays(start, today);
-                    calculated[0] = weekday * (total_capacity / 5);
-                    calculated[1] = count * (weekday * (org_capacity / 5));
-                    calculated[2] = weekday;
-                }
-                else
-                {
-                    weekday = weekdays(start, end);
-                    calculated[0] = weekday * (total_capacity / 5);
-                    calculated[1] = count * (weekday * (org_capacity / 5));
-                    calculated[2] = weekday;
-                }
+                weekday = weekdays(start, today);
+                calculated[0] = weekday * (total_capacity / 5);
+                calculated[1] = count * (weekday * (org_capacity / 5));
+                calculated[2] = weekday;
             }
             //ELSE IT WILL CALCULATE FROM 1ST DAY OF THIS MONTH TO TODAY 
-            else if (DateTime.Compare(start, this_month)<=0)
+            else
             {
-                if (DateTime.Compare(end, today) >= 0)
-                {
-                    weekday = weekdays(this_month, today);
-                    calculated[0] = weekday * (total_capacity / 5); //UTILIZED
-                    calculated[1] = count * (weekday * (org_capacity / 5)); //IDEAL
-                    calculated[2] = weekday; //WEEKDAYS
-                }
-                else
+                DateTime startDate = new DateTime(today.Year, today.Month, 1);
+                weekday = weekdays(startDate, today);
+                calculated[0] = weekday * (total_capacity / 5); //UTILIZED
+                calculated[1] = count * (weekday * (org_capacity / 5)); //IDEAL
+                calculated[2] = weekday; //WEEKDAYS
+            }
+        }
+        //IF NOT IN BETWEEN
+        else if (compare_today_end < 0)
+        {
+            if (end.Month == today.Month)
+            {
+                if (DateTime.Compare(end, this_month) > 0)
                 {
                     weekday = weekdays(this_month, end);
                     calculated[0] = weekday * (total_capacity / 5);
                     calculated[1] = count * (weekday * (org_capacity / 5));
                     calculated[2] = weekday;
                 }
+                else
+                {
+                    calculated[2] = 0;
+                    return calculated;
+                }
             }
+            else if (end.Month < today.Month)
+            {
+                calculated[0] = 0;
+                return calculated;
+            }
+            // popup box for todays date is not in between date
         }
-        // }
-        //IF NOT IN BETWEEN
         else
         {
-            if (DateTime.Compare(start, this_month) >= 0)
-            {
-                if (DateTime.Compare(end, today) >= 0)
-                {
-                    weekday = weekdays(start, today);
-                    calculated[0] = weekday * (total_capacity / 5);
-                    calculated[1] = count * (weekday * (org_capacity / 5));
-                    calculated[2] = weekday;
-                }
-                else
-                {
-                    weekday = weekdays(start, end);
-                    calculated[0] = weekday * (total_capacity / 5);
-                    calculated[1] = count * (weekday * (org_capacity / 5));
-                    calculated[2] = weekday;
-                }
-            }
-            else if (DateTime.Compare(start, this_month) <= 0)
-            {
-                if (DateTime.Compare(end, today) >= 0)
-                {
-                    weekday = weekdays(this_month, today);
-                    calculated[0] = weekday * (total_capacity / 5); //UTILIZED
-                    calculated[1] = count * (weekday * (org_capacity / 5)); //IDEAL
-                    calculated[2] = weekday; //WEEKDAYS
-                }
-                else
-                {
-                    weekday = weekdays(this_month, end);
-                    calculated[0] = weekday * (total_capacity / 5);
-                    calculated[1] = count * (weekday * (org_capacity / 5));
-                    calculated[2] = weekday;
-                }
-            }
-
+            calculated[0] = 0;
+            return calculated;
         }
+
         sqlConnn.Close();
         return calculated;
     }

@@ -12,7 +12,7 @@
       
 </head>
     <header>
-        <h1>RESOURCE MANAGEMENT<asp:Image ID="Image1" ImageUrl="images/ameex2.jpg" runat="server" style="z-index: 1; left: 44px; top: 21px; position: absolute; width: 201px; height: 40px" />
+        <h1>RESOURCE MANAGEMENT<asp:Image ID="img_logo" ImageUrl="images/ameex2.jpg" runat="server" style="z-index: 1; left: 44px; top: 21px; position: absolute; width: 201px; height: 40px" />
         </h1>
     </header>
     

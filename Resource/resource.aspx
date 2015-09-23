@@ -16,16 +16,18 @@
         <li><a href="addresource.aspx">Add New Resource</a></li>
       
     </ul>
+        <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>
     </div>
-    <asp:Label ID="lblin" CssClass="logo" runat="server" Text="Label"></asp:Label>
-    <asp:HyperLink ID="HyperLink1" CssClass="link" NavigateUrl="~/login.aspx" runat="server">Logout</asp:HyperLink>
-    <asp:Label ID="desig" CssClass="desi" runat ="server" Text="Label"></asp:Label>
+    
+  
+    <asp:LinkButton ID="link_logout"  CssClass="link" runat="server" OnClick="linkbutton1_Click">Logout</asp:LinkButton>
 
     <div id="details">
-    <asp:GridView ID="GridView1" AutoGenerateColumns="false"   CellPadding="10"  OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"  OnRowCancelingEdit="GridView1_RowCancelingEdit" DataKeyNames="emp_id"
+    <asp:GridView ID="grid_resource" AutoGenerateColumns="false"   CellPadding="10"  OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating"  OnRowCancelingEdit="GridView1_RowCancelingEdit" DataKeyNames="emp_id"
                  runat="server">
-         <HeaderStyle BackColor="#663300" ForeColor="#ffffff"  Font-Size="18px" Height="45px"/>  
-        <rowstyle Height="40px" Font-Size="17px" BackColor="#e7ceb6"/>
+         <HeaderStyle BackColor="#196763" ForeColor="#ffffff"  Font-Size="18px" Height="45px"/>  
+        <rowstyle Height="40px" Font-Size="17px" BackColor="#C7CECD"/>
         <alternatingrowstyle  Height="35px" Font-Size="17px"/>
      <Columns> 
         <asp:TemplateField HeaderText="Employee_Id" HeaderStyle-Width="120px">  
@@ -68,7 +70,7 @@
                    <EditItemTemplate>  
                        <asp:DropDownList ID="typeoftech" runat="server" AutoPostBack="True" DataTextField="typeof_tech" DataValueField="typeof_tech" >
                             <asp:ListItem Value="Select">Select</asp:ListItem>      
-                           <asp:ListItem Value="proprietary">proprietary</asp:ListItem> 
+                           <asp:ListItem Value="Proprietary">Proprietary</asp:ListItem> 
                                  <asp:ListItem Value="Open Source">Open Source</asp:ListItem>
                                 
                          </asp:DropDownList>  

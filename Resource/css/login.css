@@ -1,13 +1,13 @@
 ﻿body
 {
-    background-color:#FFDAB9;   
+    background-color: #EFE7D9;   
 }
 #cont
 {
    
     margin-left:49%;
     width:50%;
-    background-color: #FFEFD5;
+    background-color:  #EFE7D9;
     height: 500px;
     border:2px solid black;
     border: 2px solid black;
@@ -30,6 +30,7 @@ span {
     margin: 32px 1px 0px 120px;
     float: left;
     color: #4A8E8B;
+    font-size: 18px;
 }
 input {
     float: right;

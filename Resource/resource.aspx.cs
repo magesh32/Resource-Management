@@ -10,32 +10,39 @@ using System.Data;
 public partial class projects : System.Web.UI.Page
 {
     int b;
-    SqlConnection con = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+    SqlConnection con = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
     protected void Page_Load(object sender, EventArgs e)
     {
-        b = Convert.ToInt32(Session["Emp_Id"]);
-        con.Open();
-        SqlCommand mycommand = new SqlCommand("select emp_name,role from Employee where emp_id=@id ", con);
-        mycommand.Parameters.AddWithValue("@id", b);
-
-        SqlDataReader read = mycommand.ExecuteReader();
-
-        if (read.Read())
+        if (Session["Emp_Id"] == null)
         {
-            lblin.Text = "Welcome, " + read["emp_name"].ToString();
-            desig.Text = "Designation: " + read["role"].ToString();
+            Response.Redirect("~/login.aspx");
+        }
+        else
+        {
+            b = Convert.ToInt32(Session["Emp_Id"]);
+            con.Open();
+            SqlCommand mycommand = new SqlCommand("select emp_name,role from Employee where emp_id=@id ", con);
+            mycommand.Parameters.AddWithValue("@id", b);
+
+            SqlDataReader read = mycommand.ExecuteReader();
+
+            if (read.Read())
+            {
+                lblin.Text = "Welcome, " + read["emp_name"].ToString();
+                desig.Text = "Designation: " + read["role"].ToString();
+
+            }
+
+            read.Close();
+            con.Close();
+
+            if (!IsPostBack)
+            {
+                showdata();
+
+            }
 
         }
-
-        read.Close();
-        con.Close();
-
-        if (!IsPostBack)
-        {
-            showdata();
-   
-        }
-
     }
 
 
@@ -49,36 +56,36 @@ public partial class projects : System.Web.UI.Page
         da.Fill(dt);
         if (dt.Rows.Count > 0)
         {
-            GridView1.DataSource = dt;
-            GridView1.DataBind();
+            grid_resource.DataSource = dt;
+            grid_resource.DataBind();
         }
         con.Close();
     }
     protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        GridView1.EditIndex = -1;
+        grid_resource.EditIndex = -1;
         showdata();
     }
     protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        GridView1.EditIndex = e.NewEditIndex;
+        grid_resource.EditIndex = e.NewEditIndex;
         showdata();
     }
     protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         int org_capacity = 0, balanced = 0, bal_capacity=0;
         con.Open();
-        Label id = GridView1.Rows[e.RowIndex].FindControl("lbl_Id") as Label;
-        TextBox name = GridView1.Rows[e.RowIndex].FindControl("txt_name") as TextBox;
-        TextBox mail = GridView1.Rows[e.RowIndex].FindControl("txt_mail") as TextBox;
-        TextBox capacity = GridView1.Rows[e.RowIndex].FindControl("txt_capacity") as TextBox;
-        GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
+        Label id = grid_resource.Rows[e.RowIndex].FindControl("lbl_Id") as Label;
+        TextBox name = grid_resource.Rows[e.RowIndex].FindControl("txt_name") as TextBox;
+        TextBox mail = grid_resource.Rows[e.RowIndex].FindControl("txt_mail") as TextBox;
+        TextBox capacity = grid_resource.Rows[e.RowIndex].FindControl("txt_capacity") as TextBox;
+        GridViewRow row = (GridViewRow)grid_resource.Rows[e.RowIndex];
         Label lblID = (Label)row.FindControl("lbl_framework");
         DropDownList role = (DropDownList)row.FindControl("role");
         DropDownList drop = (DropDownList)row.FindControl("typeoftech");
         DropDownList drop1 = (DropDownList)row.FindControl("tech");
         DropDownList drop2 = (DropDownList)row.FindControl("frame");
-        GridView1.EditIndex = -1;
+        grid_resource.EditIndex = -1;
         //UPDATING BLANCED AND PRO_FLAG
         SqlCommand command = new SqlCommand("select Original_Capacity,Balance_Capacity from Employee where emp_id='" + Int32.Parse(id.Text) + "'", con);
         SqlDataReader reader = command.ExecuteReader();
@@ -112,7 +119,7 @@ public partial class projects : System.Web.UI.Page
         command1.ExecuteNonQuery();
 
         con.Close();
-        GridView1.EditIndex = -1;
+        grid_resource.EditIndex = -1;
         showdata();
 
     }
@@ -135,4 +142,10 @@ public partial class projects : System.Web.UI.Page
     }
 
 
+    protected void linkbutton1_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session["Emp_Id"] = null;
+        Response.Redirect("~/login.aspx");
+    }
 }

@@ -13,27 +13,27 @@
              <asp:ScriptManager ID="ScriptManager1" runat="server">
               </asp:ScriptManager>
             <h2>Employee Registration</h2>
-            <asp:Image ID="Image1" runat="server" imageUrl="images/ektron.jpg" style="z-index: 1; left: 699px; top: 152px; position: absolute; width: 213px; height: 125px" />
+            <asp:Image ID="img_ektron" runat="server" imageUrl="images/ektron.jpg" style="z-index: 1; left: 699px; top: 142px; position: absolute; width: 213px; height: 125px" />
             <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
             <table class="registrationform">
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="emp_id" runat="server" Text="Employee_Id"></asp:Label>
+                        <asp:Label ID="lbl_empid" runat="server" Text="Employee_Id"></asp:Label>
                     </td>
-                    <td> <asp:TextBox ID="emp_id1" runat="server"></asp:TextBox></td>
+                    <td> <asp:TextBox ID="txt_empid" runat="server"></asp:TextBox></td>
                     <td>
                         <br />
-                        <asp:Label ID="empid" runat="server" CssClass="errors"></asp:Label>
+                        <asp:Label ID="empidvalidate" runat="server" CssClass="errors"></asp:Label>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label1" runat="server" Text="Employee_Name"></asp:Label></td>
+                        <asp:Label ID="lbl_empname" runat="server" Text="Employee_Name"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></td>
+                        <asp:TextBox ID="txt_empname" runat="server"></asp:TextBox></td>
 
                     <td>
                         <br />
@@ -43,9 +43,9 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label2" runat="server" Text="Email_ID"></asp:Label></td>
+                        <asp:Label ID="lbl_emailid" runat="server" Text="Email_ID"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox></td>
+                        <asp:TextBox ID="txt_emailid" runat="server"></asp:TextBox></td>
 
                     <td>
                         <br>
@@ -56,9 +56,9 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="typeoftech" runat="server" Text=" Type of Technology"></asp:Label></td>
+                        <asp:Label ID="lbl_typeoftech" runat="server" Text=" Type of Technology"></asp:Label></td>
                     <td>
-                        <asp:DropDownList ID="typeoftech1" runat="server" OnSelectedIndexChanged="typeoftech1_SelectedIndexChanged" AutoPostBack="true">
+                        <asp:DropDownList ID="drop_typeoftech" runat="server" OnSelectedIndexChanged="typeoftech1_SelectedIndexChanged" AutoPostBack="true">
                             <asp:ListItem>select </asp:ListItem>
                             <asp:ListItem Value="Proprietary">Proprietary</asp:ListItem>
                             <asp:ListItem Value="Open Source">Open Source</asp:ListItem>
@@ -67,9 +67,9 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label7" runat="server" Text="Technology"></asp:Label></td>
+                        <asp:Label ID="lbl_tech" runat="server" Text="Technology"></asp:Label></td>
                     <td>
-                        <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
+                        <asp:DropDownList ID="drop_tech" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
                             <asp:ListItem>select </asp:ListItem>
                             <asp:ListItem Value=".Net">.Net</asp:ListItem>
                             <asp:ListItem Value="Php">Php</asp:ListItem>
@@ -79,9 +79,9 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label3" runat="server" Text="Framework"></asp:Label></td>
+                        <asp:Label ID="lbl_frame" runat="server" Text="Framework"></asp:Label></td>
                     <td>
-                        <asp:DropDownList ID="DropDownList1" runat="server">
+                        <asp:DropDownList ID="drop_frame" runat="server">
                             <asp:ListItem>select </asp:ListItem>
                             <asp:ListItem Value="Ektron">Ektron</asp:ListItem>
                             <asp:ListItem Value="Episerver">Episerver</asp:ListItem>
@@ -97,9 +97,9 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label4" runat="server" Text="Role"></asp:Label></td>
+                        <asp:Label ID="lbl_role" runat="server" Text="Role"></asp:Label></td>
                     <td>
-                        <asp:DropDownList ID="DropDownList2" runat="server">
+                        <asp:DropDownList ID="drop_role" runat="server">
                             <asp:ListItem>select</asp:ListItem>
                             <asp:ListItem>Senior_Developer</asp:ListItem>
                             <asp:ListItem>Tech_Lead</asp:ListItem>
@@ -109,9 +109,9 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label5" runat="server" Text="Password"></asp:Label></td>
+                        <asp:Label ID="lbl_pwd" runat="server" Text="Password"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="TextBox3" type="password" runat="server" TextMode="Password"></asp:TextBox></td>
+                        <asp:TextBox ID="txt_pwd" type="password" runat="server" TextMode="Password"></asp:TextBox></td>
                     <td>
                         <br />
                         <asp:Label ID="pwdvalidation" runat="server" CssClass="errors"></asp:Label></td>
@@ -119,18 +119,18 @@
                 <tr>
                     <td>
                         <br />
-                        <asp:Label ID="Label6" runat="server" Text="Confirm Password"></asp:Label></td>
+                        <asp:Label ID="lbl_cnfpwd" runat="server" Text="Confirm Password"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="TextBox4" type="password" runat="server" TextMode="Password"></asp:TextBox></td>
+                        <asp:TextBox ID="txt_cnfpwd" type="password" runat="server" TextMode="Password"></asp:TextBox></td>
                     <td>
                         <br />
                         <asp:Label ID="cnfpwdvalidation" runat="server" CssClass="errors"></asp:Label></td>
                 </tr>
-                <tr><td></td><td><asp:Button ID="submit" Class="btn" runat="server" Text="submit" OnClick="Button1_Click" /></td></tr>
+                <tr><td></td><td><asp:Button ID="btn_submit" Class="btn" runat="server" Text="submit" OnClick="Button1_Click" /></td></tr>
             </table>
              </ContentTemplate>
                      <Triggers>
-                     <asp:AsyncPostBackTrigger ControlID="DropDownList1" EventName="SelectedIndexChanged" />
+                     <asp:AsyncPostBackTrigger ControlID="drop_frame" EventName="SelectedIndexChanged" />
                      </Triggers>
                      </asp:UpdatePanel> 
       

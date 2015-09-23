@@ -25,18 +25,18 @@
         <table id="dash">
             <tr>   
                <%-- EMPLOYEE ID--%>
-                <td><asp:Label ID="Label1" runat="server" Text="Emp_Id"></asp:Label></td>
-                <td><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></td>
+                <td><asp:Label ID="lbl_empid" runat="server" Text="Emp_Id"></asp:Label></td>
+                <td><asp:TextBox ID="txt_empid" runat="server"></asp:TextBox></td>
             </tr>
             <tr>
                 <%--PASSWORD--%>
-                <td><asp:Label ID="Label2"  runat="server" Text="Password"></asp:Label></td>
-                <td><asp:TextBox ID="TextBox2" runat="server" TextMode="Password"></asp:TextBox></td>
+                <td><asp:Label ID="lbl_password"  runat="server" Text="Password"></asp:Label></td>
+                <td><asp:TextBox ID="txt_password" runat="server" TextMode="Password"></asp:TextBox></td>
             </tr>
-            <tr><td></td><td><asp:Label ID="Label4" runat="server" CssClass="error" Visible="false"></asp:Label></td></tr>
-            <tr><td></td><td><asp:Button ID="Btn" CssClass="btn" runat="server" Text="Login" OnClick="Btn_Click" /></td></tr>
-            <tr><td></td><td><asp:HyperLink Class="hyper" ID="HyperLink1" runat="server" NavigateUrl="email.aspx">Forgot Password?</asp:HyperLink></td></tr>
-            <tr><td></td><td><asp:HyperLink Class="hyper1" ID="HyperLink2" runat="server" NavigateUrl="singup.aspx">Singup</asp:HyperLink></td></tr>
+            <tr><td></td><td><asp:Label ID="lbl_error" runat="server" CssClass="error" Visible="false"></asp:Label></td></tr>
+            <tr><td></td><td><asp:Button ID="Btn_login" CssClass="btn" runat="server" Text="Login" OnClick="Btn_Click" /></td></tr>
+            <tr><td></td><td><asp:HyperLink Class="hyper" ID="hyper_forgot" runat="server" NavigateUrl="email.aspx">Forgot Password?</asp:HyperLink></td></tr>
+            <tr><td></td><td><asp:HyperLink Class="hyper1" ID="hyper_signup" runat="server" NavigateUrl="singup.aspx">Signup</asp:HyperLink></td></tr>
        </table>
     </div>
 </asp:Content>

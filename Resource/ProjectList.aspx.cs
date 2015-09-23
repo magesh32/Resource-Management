@@ -6,23 +6,47 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 public partial class ProjectList : System.Web.UI.Page
 {
     int b, id;
-    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
     DataTable dt2 = new DataTable();
     DataTable dt3 = new DataTable();
-
+    int c;
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-        if (!IsPostBack)
+        if (Session["Emp_Id"] == null)
         {
-            SetDefaultView();
-            //BINDS DATA TO GRIDVIEW
-            ShowData();
-            Showdata1();
-            BindData();
+            Response.Redirect("~/login.aspx");
+        }
+        else
+        {
+            c = Convert.ToInt32(Session["Emp_Id"]);
+            sqlConnn.Open();
+            SqlCommand mycommand = new SqlCommand("select emp_name,role from Employee where emp_id=@id ", sqlConnn);
+            mycommand.Parameters.AddWithValue("@id", c);
+
+            SqlDataReader read = mycommand.ExecuteReader();
+
+            if (read.Read())
+            {
+                welcome.Text = "Welcome, " + read["emp_name"].ToString();
+                role.Text = "Designation: " + read["role"].ToString();
+
+            }
+
+            read.Close();
+            sqlConnn.Close();
+
+            if (!IsPostBack)
+            {
+                SetDefaultView();
+                //BINDS DATA TO GRIDVIEW
+                ShowData();
+                Showdata1();
+                BindData();
+            }
         }
     }
     private void SetDefaultView()
@@ -64,21 +88,21 @@ public partial class ProjectList : System.Web.UI.Page
         //IF ROWS OF DATATABLE > 0 
         if (dt2.Rows.Count > 0)
         {
-            GridView3.DataSource = dt2;
-            GridView3.DataBind();
+            grid_project.DataSource = dt2;
+            grid_project.DataBind();
 
         }
         //IF NO RECORD FOUND
         else
         {
             dt2.Rows.Add(dt2.NewRow());
-            GridView3.DataSource = dt2;
-            GridView3.DataBind();
-            int totalcolums = GridView3.Rows[0].Cells.Count;
-            GridView3.Rows[0].Cells.Clear();
-            GridView3.Rows[0].Cells.Add(new TableCell());
-            GridView3.Rows[0].Cells[0].ColumnSpan = totalcolums;
-            GridView3.Rows[0].Cells[0].Text = "No Data Found";
+            grid_project.DataSource = dt2;
+            grid_project.DataBind();
+            int totalcolums = grid_project.Rows[0].Cells.Count;
+            grid_project.Rows[0].Cells.Clear();
+            grid_project.Rows[0].Cells.Add(new TableCell());
+            grid_project.Rows[0].Cells[0].ColumnSpan = totalcolums;
+            grid_project.Rows[0].Cells[0].Text = "No Data Found";
         }
 
         sqlConnn.Close();
@@ -100,20 +124,20 @@ public partial class ProjectList : System.Web.UI.Page
         //IF ROWS OF DATATABLE > 0 
         if (dt3.Rows.Count > 0)
         {
-            GridView1.DataSource = dt3;
-            GridView1.DataBind();
+            grid_resource.DataSource = dt3;
+            grid_resource.DataBind();
         }
         //IF NO RECORD FOUND
         else
         {
             dt3.Rows.Add(dt3.NewRow());
-            GridView1.DataSource = dt3;
-            GridView1.DataBind();
-            int totalcolums = GridView1.Rows[0].Cells.Count;
-            GridView1.Rows[0].Cells.Clear();
-            GridView1.Rows[0].Cells.Add(new TableCell());
-            GridView1.Rows[0].Cells[0].ColumnSpan = totalcolums;
-            GridView1.Rows[0].Cells[0].Text = "No Data Found";
+            grid_resource.DataSource = dt3;
+            grid_resource.DataBind();
+            int totalcolums = grid_resource.Rows[0].Cells.Count;
+            grid_resource.Rows[0].Cells.Clear();
+            grid_resource.Rows[0].Cells.Add(new TableCell());
+            grid_resource.Rows[0].Cells[0].ColumnSpan = totalcolums;
+            grid_resource.Rows[0].Cells[0].Text = "No Data Found";
         }
         sqlConnn.Close();
 
@@ -123,26 +147,26 @@ public partial class ProjectList : System.Web.UI.Page
     //THIS IS FOR CANCEL BUTTON
     protected void GridView3_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        GridView3.EditIndex = -1;
+        grid_project.EditIndex = -1;
         ShowData();
     }
 
     //THIS IS FOR EDITING BUTTON
     protected void GridView3_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        GridView3.EditIndex = e.NewEditIndex;
+        grid_project.EditIndex = e.NewEditIndex;
         ShowData();
     }
 
     //THIS IS FOR UPDATION
     protected void GridView3_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
-        Label id = GridView3.Rows[e.RowIndex].FindControl("lbl_Id") as Label;
-        TextBox name = GridView3.Rows[e.RowIndex].FindControl("txt_Name") as TextBox;
-        TextBox Client = GridView3.Rows[e.RowIndex].FindControl("txt_Client") as TextBox;
-        TextBox Duration = GridView3.Rows[e.RowIndex].FindControl("txt_Duration") as TextBox;
-        TextBox start = GridView3.Rows[e.RowIndex].FindControl("txt_start_date") as TextBox;
-        TextBox end = GridView3.Rows[e.RowIndex].FindControl("txt_end_date") as TextBox;
+        Label id = grid_project.Rows[e.RowIndex].FindControl("lbl_Id") as Label;
+        TextBox name = grid_project.Rows[e.RowIndex].FindControl("txt_Name") as TextBox;
+        TextBox Client = grid_project.Rows[e.RowIndex].FindControl("txt_Client") as TextBox;
+        TextBox Duration = grid_project.Rows[e.RowIndex].FindControl("txt_Duration") as TextBox;
+        TextBox start = grid_project.Rows[e.RowIndex].FindControl("txt_start_date") as TextBox;
+        TextBox end = grid_project.Rows[e.RowIndex].FindControl("txt_end_date") as TextBox;
         //UPDATING PROJECT STATUS AND EDITED VALUES
         string p_status = string.Empty;
         sqlConnn.Open();
@@ -170,7 +194,7 @@ public partial class ProjectList : System.Web.UI.Page
             sqlConnn.Close();
         }
         //Setting the EditIndex property to -1 to cancel the Edit mode in Gridview  
-        GridView3.EditIndex = -1;
+        grid_project.EditIndex = -1;
         //Call ShowData method for displaying updated data  
         ShowData();
 
@@ -180,9 +204,9 @@ public partial class ProjectList : System.Web.UI.Page
     // THIS IS TO DELETE THE ROW AND UPDATE THE STATUS IN DATABASE TABLE
     protected void GridView3_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        string ids = GridView3.DataKeys[e.RowIndex].Value.ToString();
+        string ids = grid_project.DataKeys[e.RowIndex].Value.ToString();
         int id = Convert.ToInt32(ids);
-        GridView3.Rows[e.RowIndex].Visible = false;
+        grid_project.Rows[e.RowIndex].Visible = false;
         sqlConnn.Open();
         SqlCommand cmd1 = new SqlCommand("Update projectlist set Flag=@fla, Project_status='Deleted', deleted_date='" + DateTime.Today + "' where P_id=@idm", sqlConnn);
         cmd1.Parameters.AddWithValue("@fla", 1);
@@ -214,14 +238,14 @@ public partial class ProjectList : System.Web.UI.Page
     //GRIDVIEW 1 started
     protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
     {
-        GridView1.EditIndex = -1;
+        grid_resource.EditIndex = -1;
         Showdata1();
     }
 
     //THIS IS FOR EDITING BUTTON
     protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
     {
-        GridView1.EditIndex = e.NewEditIndex;
+        grid_resource.EditIndex = e.NewEditIndex;
         Showdata1();
     }
 
@@ -229,11 +253,11 @@ public partial class ProjectList : System.Web.UI.Page
     protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
     {
         int pro_capacity = 0, balanced = 0, value = 0;
-        GridViewRow row = (GridViewRow)GridView1.Rows[e.RowIndex];
-        Label id = GridView1.Rows[e.RowIndex].FindControl("lbl_Id") as Label;
-        Label emp_id = GridView1.Rows[e.RowIndex].FindControl("lbl_Emp_id") as Label;
+        GridViewRow row = (GridViewRow)grid_resource.Rows[e.RowIndex];
+        Label id = grid_resource.Rows[e.RowIndex].FindControl("lbl_Id") as Label;
+        Label emp_id = grid_resource.Rows[e.RowIndex].FindControl("lbl_Emp_id") as Label;
         DropDownList role = (DropDownList)row.FindControl("role");
-        TextBox Capacity = GridView1.Rows[e.RowIndex].FindControl("txt_Capacity") as TextBox;
+        TextBox Capacity = grid_resource.Rows[e.RowIndex].FindControl("txt_Capacity") as TextBox;
         sqlConnn.Open();
         //TO CHECK CAN CAPACITY OF RESOURCE CAN BE CHANGED FOR THE PROJECT
 
@@ -308,7 +332,7 @@ public partial class ProjectList : System.Web.UI.Page
         sqlConnn.Close();
 
         //Setting the EditIndex property to -1 to cancel the Edit mode in Gridview  
-        GridView1.EditIndex = -1;
+        grid_resource.EditIndex = -1;
         //Call ShowData method for displaying updated data  
         Showdata1();
 
@@ -318,10 +342,10 @@ public partial class ProjectList : System.Web.UI.Page
     // THIS IS TO DELETE THE ROW AND UPDATE THE STATUS IN DATABASE TABLE
     protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        string ids = GridView1.DataKeys[e.RowIndex].Value.ToString();
+        string ids = grid_resource.DataKeys[e.RowIndex].Value.ToString();
         int p_id = Convert.ToInt32(ids);
-        GridView1.Rows[e.RowIndex].Visible = false;
-        Label emp_id = GridView1.Rows[e.RowIndex].FindControl("lbl_Emp_Id") as Label;
+        grid_resource.Rows[e.RowIndex].Visible = false;
+        Label emp_id = grid_resource.Rows[e.RowIndex].FindControl("lbl_Emp_Id") as Label;
         sqlConnn.Open();
         SqlCommand cmd1 = new SqlCommand("Update pro_resources set Flag=@fla,Status=@status,Rem_date=@date where P_id=@idm and Emp_id=@emp", sqlConnn);
         cmd1.Parameters.AddWithValue("@fla", 1);
@@ -412,13 +436,15 @@ public partial class ProjectList : System.Web.UI.Page
         int b = Convert.ToInt32(Session["Emp_Id"]);
         int id = Convert.ToInt32(Request.QueryString["ID"]);
         sqlConnn.Open();
+        string replacement = Regex.Replace(DropDownList1.SelectedValue.Trim(), @"\t|\n|\r", "");
         SqlCommand command = new SqlCommand("select role from Employee where emp_name=@name", sqlConnn);
-        command.Parameters.AddWithValue("@name", DropDownList1.SelectedValue.Trim());
-        SqlDataReader reader1 = command.ExecuteReader();
-        if (reader1.Read())
-        {
-            TextBox1.Text = reader1["role"].ToString();
-        }
+        command.Parameters.AddWithValue("@name", replacement);
+        SqlDataReader rd= command.ExecuteReader();
+        
+      if(rd.Read())
+      {
+            TextBox1.Text = rd["role"].ToString();
+      }
         sqlConnn.Close();
     }
     protected void Button1_Click(object sender, EventArgs e)
@@ -479,5 +505,11 @@ public partial class ProjectList : System.Web.UI.Page
             }
         }
 
+    }
+    protected void linkbut_Click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Session["Emp_Id"] = null;
+        Response.Redirect("~/login.aspx");
     }
 }

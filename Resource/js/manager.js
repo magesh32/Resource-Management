@@ -60,8 +60,11 @@ $(document).ready(function () {
         if (this.href.trim() == window.location)
             $(this).addClass("style1");
     });
-  
-   
+    var capacityCntrl = $('.capacity');
+    if (capacityCntrl && capacityCntrl.length > 0) {
+        var divPosition = $('#tblListBox').offset();
+        $('html, body').animate({ scrollTop: divPosition.top }, "fast");
+    }
   
 });
 

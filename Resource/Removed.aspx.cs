@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 public partial class _Default : System.Web.UI.Page
 {
     int id;
-    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project;User Id=sa;Password=sa5;Trusted_connection=false");
+    SqlConnection sqlConnn = new SqlConnection(@"Data Source=AMX503-PC;Initial Catalog=project1;User Id=sa;Password=sa5;Trusted_connection=false");
     DataTable dt2 = new DataTable();
     DataTable dt3 = new DataTable();
     protected void Page_Load(object sender, EventArgs e)
@@ -46,19 +46,19 @@ public partial class _Default : System.Web.UI.Page
         adapter.Fill(dt2);
         if (dt2.Rows.Count > 0)
         {
-            GridView4.DataSource = dt2;
-            GridView4.DataBind();
+            grid_delproject.DataSource = dt2;
+            grid_delproject.DataBind();
         }
         else
         {
             dt2.Rows.Add(dt2.NewRow());
-            GridView4.DataSource = dt2;
-            GridView4.DataBind();
-            int totalcolums = GridView4.Rows[0].Cells.Count;
-            GridView4.Rows[0].Cells.Clear();
-            GridView4.Rows[0].Cells.Add(new TableCell());
-            GridView4.Rows[0].Cells[0].ColumnSpan = totalcolums;
-            GridView4.Rows[0].Cells[0].Text = "No Data Found";
+            grid_delproject.DataSource = dt2;
+            grid_delproject.DataBind();
+            int totalcolums = grid_delproject.Rows[0].Cells.Count;
+            grid_delproject.Rows[0].Cells.Clear();
+            grid_delproject.Rows[0].Cells.Add(new TableCell());
+            grid_delproject.Rows[0].Cells[0].ColumnSpan = totalcolums;
+            grid_delproject.Rows[0].Cells[0].Text = "No Data Found";
         }
         sqlConnn.Close();
     }
@@ -74,20 +74,20 @@ public partial class _Default : System.Web.UI.Page
         //IF ROWS OF DATATABLE > 0 
         if (dt3.Rows.Count > 0)
         {
-            GridView2.DataSource = dt3;
-            GridView2.DataBind();
+            grid_delresource.DataSource = dt3;
+            grid_delresource.DataBind();
         }
         //IF NO RECORD FOUND
         else
         {
             dt3.Rows.Add(dt3.NewRow());
-            GridView2.DataSource = dt3;
-            GridView2.DataBind();
-            int totalcolums = GridView2.Rows[0].Cells.Count;
-            GridView2.Rows[0].Cells.Clear();
-            GridView2.Rows[0].Cells.Add(new TableCell());
-            GridView2.Rows[0].Cells[0].ColumnSpan = totalcolums;
-            GridView2.Rows[0].Cells[0].Text = "No Data Found";
+            grid_delresource.DataSource = dt3;
+            grid_delresource.DataBind();
+            int totalcolums = grid_delresource.Rows[0].Cells.Count;
+            grid_delresource.Rows[0].Cells.Clear();
+            grid_delresource.Rows[0].Cells.Add(new TableCell());
+            grid_delresource.Rows[0].Cells[0].ColumnSpan = totalcolums;
+            grid_delresource.Rows[0].Cells[0].Text = "No Data Found";
         }
         sqlConnn.Close();
 
